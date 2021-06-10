@@ -4,13 +4,62 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Overlook Hotel</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+  <nav>
+    <header>
+      <logo></logo>
+      <h1>Overlook Hotel</h1>
+    </header>
+    <section>
+      <h2>Welcome back, Rachael!</h2>
+      <article>
+        <i class="fas fa-user-circle"></i>
+        <form class='user-account-info' action='drop-down'>
+          <select class='username' id='userNameInput'>
+            <option value='r-carr'>MY RESERVATIONS</option>
+            <option value='other'>BOOK A ROOM</option>
+            <option value='sign-out'>SIGN OUT</option>
+          </select>
+        </form>
+      </article>
+    </section>
+  </nav>
+  <main class='grid-container' id='gridContainer'>
+    <aside>
+      <form>
+        <div>
+          <h3>All Reservations</h3>
+          <p>Total Spent $$$</p>
+          <button>Book A Room</button>
+        </div>
+      </form>
+    </aside>
+    <section>
+      <article>
+        <div>
+          <img>
+        </div>
+        <section>
+          <div>
+            <h5>ROOM TYPE</h5>
+            <p>ROOM NUMBER</p>
+            <p>DETAILS</p>
+          </div>
+          <div>
+            <p>$$ per night</p>
+          </div>
+          <button>BOOK ROOM</button>
+        </section>
+      </article>
+    </section>
+    
+  </main>
   
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
-
+  <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+  
 </body>
 </html>
