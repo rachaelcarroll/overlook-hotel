@@ -25,53 +25,54 @@
         </form>
       </article>
     </section>
-  </main class='dashboard-view' id='dashboardView'>
-  <nav>
-    <header class='hotel-branding' id='hotelBranding'>
-      <logo></logo>
-      <h1>Overlook Hotel</h1>
-    </header>
-    <section class='user-greeting' id='userGreeting'>
-      <h2>Welcome back, Rachael!</h2>
-      <article class='user-info'>
-        <i class="fas fa-user-circle"></i>
-        <form class='user-account' action='drop-down'>
-          <select class='account-options' id='accountOptions'>
-            <option value='reservations'>MY RESERVATIONS</option>
-            <option value='book'>BOOK A ROOM</option>
-            <option value='sign-out'>LOG OUT</option>
-          </select>
+  </main>
+  <main class='dashboard-view' id='dashboardView'> 
+    <nav>
+      <header class='hotel-branding' id='hotelBranding'>
+        <logo></logo>
+        <h1>Overlook Hotel</h1>
+      </header>
+      <section class='user-greeting' id='userGreeting'>
+        <h2>Welcome back, Rachael!</h2>
+        <article class='user-info'>
+          <i class="fas fa-user-circle"></i>
+          <form class='user-account' action='drop-down'>
+            <select class='account-options' id='accountOptions'>
+              <option value='reservations'>MY RESERVATIONS</option>
+              <option value='book'>BOOK A ROOM</option>
+              <option value='sign-out'>LOG OUT</option>
+            </select>
+          </form>
+        </article>
+      </section>
+    </nav>
+    <section class='grid-container' id='gridContainer'>
+      <aside class='reservation-area' id='reservationArea'>
+        <form class='reservation-details' id='reservationDetails'>
+          <div>
+            <h3>All Reservations</h3>
+            <p>Total Spent $$$</p>
+            <button>Book A Room</button>
+          </div>
         </form>
-      </article>
-    </section>
-  </nav>
-  <main class='grid-container' id='gridContainer'>
-    <aside>
-      <form class='reservation-details' id='reservationDetails'>
-        <div>
-          <h3>All Reservations</h3>
-          <p>Total Spent $$$</p>
-          <button>Book A Room</button>
-        </div>
-      </form>
-    </aside>
-    <section class='rooms-display' id='roomsDisplay'>
-      <article class='room-card' id='roomCard'>
-        <div>
-          <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
-        </div>
-        <section class='room-details' id='roomDetails'>
-          <div>
-            <h5>ROOM TYPE</h5>
-            <p>ROOM NUMBER</p>
-            <p>DETAILS</p>
-          </div>
-          <div>
-            <p>$$ per night</p>
-          </div>
-          <button>BOOK ROOM</button>
-        </section>
-      </article>
+      </aside>
+      <section class='rooms-display' id='roomsDisplay'>
+        <article class='room-card' id='roomCard'>
+          <article class='room-details' id='roomDetails'>
+            <div class='room-photo'>
+            </div>
+            <div>
+              <h5>ROOM TYPE</h5>
+              <p>ROOM NUMBER</p>
+              <p>DETAILS</p>
+            </div>
+            <div>
+              <p>$$ per night</p>
+            </div>
+            <button>BOOK ROOM</button>
+          </article>
+        </article>
+      </section>
     </section>
   </main>
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
