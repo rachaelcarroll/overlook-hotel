@@ -14,12 +14,12 @@ console.log('This is the JavaScript entry file - your code begins here.');
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate
 
 
-const correlateCustomers = (customers, bookings) => {
-    return customers.customers.map(customer => {
-        let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
-        return new customer(user, correlatedBookings)
-})
-}
+// const correlateCustomers = (customers, bookings) => {
+//     return customers.customers.map(customer => {
+//         let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
+//         return new customer(user, correlatedBookings)
+// })
+// }
 
 
 
@@ -37,15 +37,17 @@ window.addEventListener('load', function() {
 })
 
 
-let allBookings = fetchBookingsData.bookings.map(booking => new Booking())
-let allRooms = fetchRoomsData.rooms.map(room => new Room())
+// let allBookings = fetchBookingsData.bookings.map(booking => new Booking())
+// let allRooms = fetchRoomsData.rooms.map(room => new Room())
 
-hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
+// hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
 
-currentCustomer = 
+// currentCustomer = 
 //login usernameInput.value.split at 8 ---> take that number and find match from the hotel.users.id 
 
-currentDate = date.Now()
+console.log(currentDate = new Date())
+let formattedDate = currentDate.toDateString()
+console.log(formattedDate)
 
 //renderPage 
 //hotel.user.bookings --> render to the display rooms cards 
