@@ -7,20 +7,39 @@
   <title>Overlook Hotel</title>
 </head>
 <body>
+  <main class='login-page hidden'id='loginPage'>
+    <header class='login-header' id='loginHeader'>
+      <h1 class="login-title " id="loginTitle">The Overlook Hotel</h1>
+      <p class="login-subtitle" id="loginSubtitle">paradise awaits</p>
+    </header>
+    <section class='login' id='login'>
+      <article class='login-content' id='loginContent'>
+        <p>Please Sign In</p>
+        <form class='login-credentials' id='loginCredentials'>
+          <label for='username-input'>Username:</label>
+          <input type='text' id='username-input' required>
+          <label for='password-input'>Password:</label>
+          <input type='password' id='password-input' required>
+          <button class='loginBtn' id='loginBtn'>Submit</button>
+          <p class='login-error hidden' id='loginError'>Login Error. Please try again.</p>
+        </form>
+      </article>
+    </section>
+  </main class='dashboard-view' id='dashboardView'>
   <nav>
-    <header>
+    <header class='hotel-branding' id='hotelBranding'>
       <logo></logo>
       <h1>Overlook Hotel</h1>
     </header>
-    <section>
+    <section class='user-greeting' id='userGreeting'>
       <h2>Welcome back, Rachael!</h2>
-      <article>
+      <article class='user-info'>
         <i class="fas fa-user-circle"></i>
-        <form class='user-account-info' action='drop-down'>
-          <select class='username' id='userNameInput'>
-            <option value='r-carr'>MY RESERVATIONS</option>
-            <option value='other'>BOOK A ROOM</option>
-            <option value='sign-out'>SIGN OUT</option>
+        <form class='user-account' action='drop-down'>
+          <select class='account-options' id='accountOptions'>
+            <option value='reservations'>MY RESERVATIONS</option>
+            <option value='book'>BOOK A ROOM</option>
+            <option value='sign-out'>LOG OUT</option>
           </select>
         </form>
       </article>
@@ -28,7 +47,7 @@
   </nav>
   <main class='grid-container' id='gridContainer'>
     <aside>
-      <form>
+      <form class='reservation-details' id='reservationDetails'>
         <div>
           <h3>All Reservations</h3>
           <p>Total Spent $$$</p>
@@ -36,12 +55,12 @@
         </div>
       </form>
     </aside>
-    <section>
-      <article>
+    <section class='rooms-display' id='roomsDisplay'>
+      <article class='room-card' id='roomCard'>
         <div>
-          <img>
+          <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
         </div>
-        <section>
+        <section class='room-details' id='roomDetails'>
           <div>
             <h5>ROOM TYPE</h5>
             <p>ROOM NUMBER</p>
@@ -54,12 +73,10 @@
         </section>
       </article>
     </section>
-    
   </main>
-  
   <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
   <script src="bundle.js"></script>
-  <img src="./images/turing-logo.png" alt="turing logo" height="100px" width="100px">
+  
   
 </body>
 </html>
