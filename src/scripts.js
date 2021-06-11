@@ -11,16 +11,15 @@ import './images/turing-logo.png'
 import './images/main-photo.jpg'
 
 console.log('This is the JavaScript entry file - your code begins here.');
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
 
 
-// const correlateCustomers = (customers, bookings) => {
-//     return customers.customers.map(customer => {
-//         let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
-//         return new customer(user, correlatedBookings)
-// })
-// }
-
+const correlateCustomers = (customers, bookings, rooms) => {
+    return customers.customers.map(customer => {
+        let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
+        return new Customer(user, correlatedBookings, rooms)
+})
+}
 
 
 
@@ -36,14 +35,22 @@ window.addEventListener('load', function() {
     })
 })
 
+allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
+allRooms = fetchRoomsData.rooms.map(room => new Room(room))
 
-// let allBookings = fetchBookingsData.bookings.map(booking => new Booking())
-// let allRooms = fetchRoomsData.rooms.map(room => new Room())
+hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
 
-// hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
-
-// currentCustomer = 
+//let loginId = 
 //login usernameInput.value.split at 8 ---> take that number and find match from the hotel.users.id 
+
+const getUser = (id) => {
+    apiCalls.fetchUser(id).then(data => {
+      currentCustomer = hotel.customers.find(customer => customer.id === data.id)
+      currentUser.calculateTotalSpent(hotel);
+    })
+  }
+
+
 
 console.log(currentDate = new Date())
 let formattedDate = currentDate.toDateString()
