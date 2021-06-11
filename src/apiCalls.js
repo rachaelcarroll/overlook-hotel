@@ -20,6 +20,12 @@ const fetchAllCustomers = () => {
       .catch(err => console.error("not working"))
   }
 
+  const fetchCustomer = (id) => {
+    return fetch(`http://localhost:3001/api/v1/customers/${id}`)
+      .then(response => response.json())
+      .catch(err => console.error("not working"))
+  }
+
   const getData = () => {
     return Promise.all([fetchAllCustomers(), fetchRooms(), fetchBookings()])
   }
@@ -42,6 +48,4 @@ const checkForError = response => {
     }
 }
 
-export default {
-    getData
-}
+export default { getData , fetchCustomer }
