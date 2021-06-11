@@ -9,6 +9,7 @@ import apiCalls from './apiCalls'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import './images/main-photo.jpg'
+import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
@@ -35,20 +36,20 @@ window.addEventListener('load', function() {
     })
 })
 
-allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
-allRooms = fetchRoomsData.rooms.map(room => new Room(room))
+// allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
+// allRooms = fetchRoomsData.rooms.map(room => new Room(room))
 
-hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
+// hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
 
 //let loginId = 
 //login usernameInput.value.split at 8 ---> take that number and find match from the hotel.users.id 
 
-const getUser = (id) => {
-    apiCalls.fetchUser(id).then(data => {
-      currentCustomer = hotel.customers.find(customer => customer.id === data.id)
-      currentUser.calculateTotalSpent(hotel);
-    })
-  }
+// const getUser = (id) => {
+//     apiCalls.fetchUser(id).then(data => {
+//       currentCustomer = hotel.customers.find(customer => customer.id === data.id)
+//       currentUser.calculateTotalSpent(hotel);
+//     })
+//   }
 
 
 
@@ -75,3 +76,27 @@ console.log(formattedDate)
 //on successful login -- hide login page -- render main dashboard... 
 //on logout -- clear page? hide dashboard, show login page...
 //when click new booking -- modal popup? or hide displayRooms (change this name) and show all rooms
+
+
+
+const accountMenu = document.getElementById('accountOptions')
+const modal = document.getElementById('modal')
+
+accountMenu.addEventListener('change', (event) => {
+    handleDropDown(event)
+})
+
+// const show = (element) => {
+//     element.classList.remove('hidden');
+// }
+
+// const hide  = (element) => {
+//     element.classList.add('hidden');
+// }
+
+const handleDropDown = (event) => {
+    if(event.target.value === 'book-room') {
+        console.log('boooked')
+        // show(modal)
+    }
+}
