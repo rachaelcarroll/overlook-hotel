@@ -52,7 +52,7 @@ const userGreeting = document.getElementById('userGreeting')
 const totalSpent = document.getElementById('totalSpent')
 const nf = Intl.NumberFormat();
 loginBtn.addEventListener('click', (event) => {
-    loadHotel(event)
+    validateLogin(event)
 })
 
 // const renderBookings = () => {
@@ -81,12 +81,18 @@ const loadHotel = (event) => {
 }
 
 
-const validateLogin = () => {
-    if(userLogin.value.includes('customer') && userLogin.value.includes(hotel.customers.some(customer => customer.id)) && password.value === 'overlook2021') {
-        loadHotel();
-    } else {
-        show(loginError);
-    }
+const validateLogin = (event) => {
+    event.preventDefault();
+    let customerids = hotel.customers.map(customer => customer.id)
+
+    let customerNum = customerids.find(id => userLogin.value.includes('customer' + id))
+    console.log(customerNum)
+    // if(userLogin.value.includes('customer') && password.value === 'overlook2021') {
+    //     show(loginError);
+    //     userLogin.value = '';
+    // } else {
+    //     loadHotel();
+    // }
 }
 
 
