@@ -12,11 +12,11 @@ import Room from './Room'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
-import './images/main-photo.jpg'
+import './images/overlook.jpg'
 // import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -69,9 +69,15 @@ const renderSpent = () => {
     totalSpent.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
 }
+const setDate = () => {
+    currentDate = new Date();
+    console.log(currentDate = new Date())
+    formattedDate = currentDate.toDateString();
+    console.log(formattedDate)
+}
+
 const loadHotel = () => {
-    // event.preventDefault();
-    console.log(hotel)
+    setDate();
     currentCustomer = hotel.customers.find(customer => customer.username === userLogin.value)
     hide(loginPage)
     show(mainDashboard)
@@ -94,41 +100,15 @@ const validateLogin = (event) => {
 
 
 
-    // let customerids = hotel.customers.map(customer => customer.id)
-
-    // let customerNum = customerids.find(id => userLogin.value.includes('customer' + id))
-    // console.log(customerNum)
-    // if(userLogin.value.includes('customer') && password.value === 'overlook2021') {
-    //     show(loginError);
-    //     userLogin.value = '';
-    // } else {
-    //     loadHotel();
-    // }
-
-
-
-
-console.log(currentDate = new Date())
-let formattedDate = currentDate.toDateString()
-console.log(formattedDate)
-
 //renderPage 
-//hotel.user.bookings --> render to the display rooms cards 
-//innertext of greeting will be currentCustomer.getFirstName()
-    // getFirstName() {
-    //     var name = this.name.split(' ');
-    //     return name[0].toUpperCase();
-    //   }
-//innertext of $$ spends should be total bookings cost
-//when booking a new stay... that room data will be added to customer.bookings array 
+//hotel.user.bookings --> render to the display reservations
+
 //new booking needs to be POST to the http://localhost:3001/api/v1/bookings	...
 // { "userID": 48, "date": "2019/09/23", "roomNumber": 4 }
 
 
 
-
 //DOM stuff
-//on successful login -- hide login page -- render main dashboard... 
 //on logout -- clear page? hide dashboard, show login page...
 //when click new booking -- modal popup? or hide displayRooms (change this name) and show all rooms
 
@@ -154,7 +134,7 @@ const handleDropDown = (event) => {
         console.log('boooked')
         show(modal)
     } else if(event.target.value === 'sign-out') {
-        console.log('signed out')
+        accountMenu.value = 'reservations';
         hide(mainDashboard)
         show(loginPage)
     }
