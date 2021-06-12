@@ -50,6 +50,7 @@ const loginPage = document.getElementById('loginPage')
 const mainDashboard = document.getElementById('dashboardView')
 const userGreeting = document.getElementById('userGreeting')
 const totalSpent = document.getElementById('totalSpent')
+const nf = Intl.NumberFormat();
 loginBtn.addEventListener('click', (event) => {
     loadHotel(event)
 })
@@ -65,9 +66,8 @@ const greetCustomer = () => {
 
 const renderSpent = () => {
     currentCustomer.calculateTotalSpent(allRooms);
-    console.log(allRooms)
     totalSpent.innerText = '';
-    totalSpent.innerText += `Total Spent: $${currentCustomer.amountSpent}`;
+    totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
 }
 const loadHotel = (event) => {
     event.preventDefault();
@@ -136,5 +136,9 @@ const handleDropDown = (event) => {
     if(event.target.value === 'book-room') {
         console.log('boooked')
         show(modal)
+    } else if(event.target.value === 'sign-out') {
+        console.log('signed out')
+        hide(mainDashboard)
+        show(loginPage)
     }
 }
