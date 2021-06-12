@@ -4,7 +4,7 @@ class Customer {
     constructor(customerData, bookings) {
         this.id = customerData.id
         this.name = customerData.name
-        this.login = `customer${customerData.id}`
+        this.username = `customer${customerData.id}`
         this.bookings = bookings;
         this.amountSpent = 0
     }
@@ -30,8 +30,9 @@ class Customer {
            return totalCost
        }, 0)
     
-    this.amountSpent = cost 
-    console.log(cost)
+    this.amountSpent = cost.toFixed(2)
+    const nf = Intl.NumberFormat();
+    return nf.format(this.amountSpent)
     }
 
 

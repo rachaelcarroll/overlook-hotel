@@ -5,6 +5,10 @@
 import './css/base.scss';
 
 import apiCalls from './apiCalls'
+import Booking from './Booking'
+import Customer from './Customer'
+import Hotel from './Hotel'
+import Room from './Room'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
@@ -14,15 +18,12 @@ import './images/main-photo.jpg'
 console.log('This is the JavaScript entry file - your code begins here.');
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
 
-
-const correlateCustomers = (customers, bookings, rooms) => {
+const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
         let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
-        return new Customer(user, correlatedBookings, rooms)
+        return new Customer(customer, correlatedBookings)
 })
 }
-
-
 
 window.addEventListener('load', function() {
     apiCalls.getData()
@@ -33,23 +34,60 @@ window.addEventListener('load', function() {
         console.log(fetchCustomerData)
         console.log(fetchRoomsData)
         console.log(fetchBookingsData)
+
+        allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
+        allRooms = fetchRoomsData.rooms.map(room => new Room(room))
+        hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)       
     })
 })
 
-// allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
-// allRooms = fetchRoomsData.rooms.map(room => new Room(room))
 
-// hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)
+const userLogin = document.getElementById('username-input')
+const loginBtn = document.getElementById('loginBtn')
+const loginError = document.getElementById('loginError')
+const password = document.getElementById('password')
+const loginPage = document.getElementById('loginPage')
+const mainDashboard = document.getElementById('dashboardView')
+const userGreeting = document.getElementById('userGreeting')
+const totalSpent = document.getElementById('totalSpent')
+loginBtn.addEventListener('click', (event) => {
+    loadHotel(event)
+})
 
-//let loginId = 
-//login usernameInput.value.split at 8 ---> take that number and find match from the hotel.users.id 
+// const renderBookings = () => {
 
-// const getUser = (id) => {
-//     apiCalls.fetchUser(id).then(data => {
-//       currentCustomer = hotel.customers.find(customer => customer.id === data.id)
-//       currentUser.calculateTotalSpent(hotel);
-//     })
-//   }
+// }
+
+const greetCustomer = () => {
+    userGreeting.innerText = ''
+    userGreeting.innerText += `Welcome back, ${currentCustomer.getFirstName()}!`
+}
+
+const renderSpent = () => {
+    currentCustomer.calculateTotalSpent(allRooms);
+    console.log(currentCustomer)
+    totalSpent.innerText = '';
+    totalSpent.innerText += `Total Spent: $${currentCustomer.amountSpent}`;
+}
+const loadHotel = (event) => {
+    event.preventDefault();
+    console.log(hotel)
+    currentCustomer = hotel.customers.find(customer => customer.username === userLogin.value)
+    hide(loginPage)
+    show(mainDashboard)
+    renderSpent()
+    greetCustomer();
+    // renderBookings();
+}
+
+
+const validateLogin = () => {
+    if(userLogin.value.includes('customer') && userLogin.value.includes(hotel.customers.some(customer => customer.id)) && password.value === 'overlook2021') {
+        loadHotel();
+    } else {
+        show(loginError);
+    }
+}
 
 
 

@@ -7,10 +7,10 @@
   <title>Overlook Hotel</title>
 </head>
 <body>
-  <main class='login-page hidden'id='loginPage'>
+  <main class='login-page'id='loginPage'>
     <header class='login-header' id='loginHeader'>
       <h1 class="login-title " id="loginTitle">The Overlook Hotel</h1>
-      <p class="login-subtitle" id="loginSubtitle">paradise awaits</p>
+      <p class="login-subtitle" id="loginSubtitle">your paradise awaits</p>
     </header>
     <section class='login' id='login'>
       <article class='login-content' id='loginContent'>
@@ -26,16 +26,15 @@
       </article>
     </section>
   </main>
-  <main class='dashboard-view' id='dashboardView'> 
+  <main class='dashboard-view hidden' id='dashboardView'> 
     <nav>
       <header class='hotel-branding' id='hotelBranding'>
         <logo></logo>
         <h1>Overlook Hotel</h1>
       </header>
-      <section class='user-greeting' id='userGreeting'>
-        <h2>Welcome back, Rachael!</h2>
+      <section class='user-nav' id='userNav'>
+        <h2 class='user-greeting' id='userGreeting'>Welcome back, Rachael!</h2>
         <article class='user-info'>
-          <i class="fas fa-user-circle"></i>
           <form class='user-account' action='drop-down'>
             <select class='account-options' id='accountOptions'>
               <option value='reservations'>MY RESERVATIONS</option>
@@ -54,7 +53,7 @@
         <section class='reservation-details' id='reservationDetails'>
           <div class='all-resos'>
             <h3>My Reservations</h3>
-            <p>Total Spent $$$</p>
+            <p class='total-spent' id='totalSpent'></p>
             <button>Make A New Reservation</button>
           </div>
         </section>
