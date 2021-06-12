@@ -89,9 +89,12 @@ const loadHotel = () => {
 
 const validateLogin = (event) => {
     event.preventDefault();
-    let customerLogin = userLogin.value.split('r');
+    let customerLogin = userLogin.value.toLowerCase().split('r');
     console.log(customerLogin)
     if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && password.value === 'overlook2021') {
+        console.log(customerLogin)
+        customerLogin = customerLogin.join('r');
+        console.log('formatted>>>', customerLogin)
         loadHotel();
     } else {
         show(loginError);
