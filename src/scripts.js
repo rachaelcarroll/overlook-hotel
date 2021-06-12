@@ -16,7 +16,7 @@ import './images/overlook.jpg'
 // import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate;
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -50,6 +50,7 @@ const loginPage = document.getElementById('loginPage')
 const mainDashboard = document.getElementById('dashboardView')
 const userGreeting = document.getElementById('userGreeting')
 const totalSpent = document.getElementById('totalSpent')
+const rewardPoints = document.getElementById('rewardPoints')
 const nf = Intl.NumberFormat();
 loginBtn.addEventListener('click', (event) => {
     validateLogin(event)
@@ -68,6 +69,8 @@ const renderSpent = () => {
     currentCustomer.calculateTotalSpent(allRooms);
     totalSpent.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
+    console.log(nf.format(currentCustomer.amountSpent))
+    rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
 const setDate = () => {
     currentDate = new Date();
@@ -76,46 +79,54 @@ const setDate = () => {
     console.log(formattedDate)
 }
 
+const renderReservations = () => {
+    currentCustomer.bookings.map(booking => {
+        roomsDisplay.innerHTML += `      
+    <article class='reservation-card' id='reservationCard'>
+        <article class='reserved-room' id='reservedRoom'>
+          <div class='room-photo'>
+            <img src='images/overlook.jpg'>
+          </div>
+          <div class='room-type'>
+            <h5>${booking.roomType} #${booking.roomNumber}</h5>
+            <p>This room includes complimentary breakfast & happy hour</p>
+            <select class='reservation-num' id='reservationNum'>
+              <option selected='true'>Reservation ID</option>
+              <option value='reservation-id'>${booking.id}</option>
+            </select>
+            <p class='reso-date'>We're looking forward to having you as our guest on ${booking.date}</p></p>
+          </div>
+          <div class='room-cost'>
+            <p class='nightly-cost'>$$</p>
+            <p>per night</p>
+          </div>
+        </article>
+      </article>`
+    }).join(''); 
+}
+
 const loadHotel = () => {
     setDate();
-    currentCustomer = hotel.customers.find(customer => customer.username === userLogin.value)
+    currentCustomer = hotel.customers.find(customer => customer.username === customerLogin)
     hide(loginPage)
     show(mainDashboard)
     renderSpent()
     greetCustomer();
-    // renderBookings();
+    renderReservations();
 }
 
 
 const validateLogin = (event) => {
     event.preventDefault();
-    let customerLogin = userLogin.value.toLowerCase().split('r');
+    customerLogin = userLogin.value.toLowerCase().split('r');
     console.log(customerLogin)
     if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && password.value === 'overlook2021') {
-        console.log(customerLogin)
         customerLogin = customerLogin.join('r');
-        console.log('formatted>>>', customerLogin)
         loadHotel();
     } else {
         show(loginError);
     }   
 }
-
-
-
-//renderPage 
-//hotel.user.bookings --> render to the display reservations
-
-//new booking needs to be POST to the http://localhost:3001/api/v1/bookings	...
-// { "userID": 48, "date": "2019/09/23", "roomNumber": 4 }
-
-
-
-//DOM stuff
-//on logout -- clear page? hide dashboard, show login page...
-//when click new booking -- modal popup? or hide displayRooms (change this name) and show all rooms
-
-
 
 const accountMenu = document.getElementById('accountOptions')
 const modal = document.getElementById('modal')
@@ -142,3 +153,5 @@ const handleDropDown = (event) => {
         show(loginPage)
     }
 }
+
+

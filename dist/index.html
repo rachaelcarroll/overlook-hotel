@@ -38,7 +38,7 @@
           <form class='user-account' action='drop-down'>
             <select class='account-options' id='accountOptions'>
               <option value='reservations'>MY RESERVATIONS</option>
-              <option value='book-room'>BOOK A ROOM</option>
+              <option value='book-room'>BOOK A STAY</option>
               <option value='sign-out'>LOG OUT</option>
             </select>
           </form>
@@ -70,27 +70,39 @@
         <section class='reservation-details' id='reservationDetails'>
           <div class='all-resos'>
             <h3>My Reservations</h3>
+            <p class='member'>Thank you for being an Overlook Reward member!</p>
             <p class='total-spent' id='totalSpent'></p>
-            <button>Make A New Reservation</button>
+            <p class='reward-points' id='rewardPoints'></p>
+            <select class='view-resos' id='viewResos'>
+              <option selected='true' >View All Reservations</option>
+              <option value='upcoming'>Upcoming</option>
+              <option value='past'>Past</option>
+            </select>
+            <button>Book A Stay</button>
           </div>
         </section>
       </aside>
       <section class='rooms-display' id='roomsDisplay'>
-        <article class='book-room-card' id='bookRoomCard'>
-          <article class='room-details' id='roomDetails'>
+        <!-- <article class='reservation-card' id='reservationCard'>
+          <article class='reserved-room' id='reservedRoom'>
             <div class='room-photo'>
+              <img src='images/overlook.jpg'>
             </div>
             <div class='room-type'>
-              <h5>ROOM TYPE</h5>
-              <p>ROOM NUMBER</p>
-              <p>DETAILS</p>
+              <h5>ROOM TYPE #RM NUMBER</h5>
+              <p>DETAILS:</p>
+              <p>2 queen beds<br>This room includes complimentary breakfast & happy hour</p>
+              <select class='reservation-num' id='reservationNum'>
+                <option selected='true'>Reservation ID</option>
+                <option value='reservation-id'>"jsksndv93m4tkd"</option>
+              </select>
             </div>
             <div class='room-cost'>
-              <p>$$ per night</p>
-              <button>BOOK ROOM</button>
+              <p class='nightly-cost'>$$</p>
+              <p>per night</p>
             </div>
           </article>
-        </article>
+        </article> -->
       </section>
     </section>
   </main>
