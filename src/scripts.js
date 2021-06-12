@@ -45,7 +45,7 @@ window.addEventListener('load', function() {
 const userLogin = document.getElementById('username-input')
 const loginBtn = document.getElementById('loginBtn')
 const loginError = document.getElementById('loginError')
-const password = document.getElementById('password')
+const password = document.getElementById('password-input')
 const loginPage = document.getElementById('loginPage')
 const mainDashboard = document.getElementById('dashboardView')
 const userGreeting = document.getElementById('userGreeting')
@@ -69,8 +69,8 @@ const renderSpent = () => {
     totalSpent.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
 }
-const loadHotel = (event) => {
-    event.preventDefault();
+const loadHotel = () => {
+    // event.preventDefault();
     console.log(hotel)
     currentCustomer = hotel.customers.find(customer => customer.username === userLogin.value)
     hide(loginPage)
@@ -83,17 +83,28 @@ const loadHotel = (event) => {
 
 const validateLogin = (event) => {
     event.preventDefault();
-    let customerids = hotel.customers.map(customer => customer.id)
+    let customerLogin = userLogin.value.split('r');
+    console.log(customerLogin)
+    if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && password.value === 'overlook2021') {
+        loadHotel();
+    } else {
+        show(loginError);
+    }   
+}
 
-    let customerNum = customerids.find(id => userLogin.value.includes('customer' + id))
-    console.log(customerNum)
+
+
+    // let customerids = hotel.customers.map(customer => customer.id)
+
+    // let customerNum = customerids.find(id => userLogin.value.includes('customer' + id))
+    // console.log(customerNum)
     // if(userLogin.value.includes('customer') && password.value === 'overlook2021') {
     //     show(loginError);
     //     userLogin.value = '';
     // } else {
     //     loadHotel();
     // }
-}
+
 
 
 
