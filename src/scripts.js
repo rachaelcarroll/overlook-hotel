@@ -65,7 +65,7 @@ const greetCustomer = () => {
 
 const renderSpent = () => {
     currentCustomer.calculateTotalSpent(allRooms);
-    console.log(currentCustomer)
+    console.log(allRooms)
     totalSpent.innerText = '';
     totalSpent.innerText += `Total Spent: $${currentCustomer.amountSpent}`;
 }
