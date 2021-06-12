@@ -4,6 +4,7 @@ class Customer {
     constructor(customerData, bookings) {
         this.id = customerData.id
         this.name = customerData.name
+        this.login = `customer${customerData.id}`
         this.bookings = bookings;
         this.amountSpent = 0
     }
