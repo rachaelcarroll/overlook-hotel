@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  background: url(../images/main-photo.jpg) no-repeat;
+  background: url(../images/overlook.jpg) no-repeat;
   background-attachment: fixed;
   background-size: cover;
   margin: 0;
@@ -60,7 +60,7 @@ body {
   p {
     font-size: 18px;
     margin-top: 27px;
-    width: 94%;
+    width: 100%;
     text-align: center;
   }
 
@@ -70,6 +70,7 @@ body {
     width: 106px;
     height: 30px;
     margin: 8px 24px 0px 24px;
+    cursor: pointer;
 
     &:hover{
       background-color: teal;
@@ -147,6 +148,7 @@ nav {
       height: 30px;
       border-radius: 10px;
       border: 1px solid teal;
+      cursor: pointer;
     }
 }
 
@@ -175,8 +177,12 @@ nav {
   flex-direction: column;
   align-items: flex-end;
   height: 80px;
-  margin: 5px 30px 0px 0px;
+  margin: 0px 15px 0px 0px;
 }
+
+// .user-info {
+//   margin: 14px;
+// }
 
 .account-options {
   height: 25px;
@@ -186,6 +192,7 @@ nav {
     color: white;
     font-size: 14px;
     border: 2px solid white;
+    cursor: pointer;
 }
 
 .reservation-details {
@@ -252,12 +259,13 @@ h1 {
   height: 100%;
   justify-content: space-between;
 
-    button{
+    button {
       border-radius: 10px;
       border: 1px solid teal;
       width: 106px;
       height: 30px;
       margin: 0px 17px 12px;
+      cursor: pointer;
 
         &:hover {
           background-color: teal;
@@ -291,11 +299,45 @@ h1 {
   flex-direction: column;
   background-color: #fefefe;
   margin: 15% auto;
-  padding: 25px;
+  padding: 0px;
   border: 1px solid #888;
-  width: 60%;
-  height: 80%;
+  width: 70%;
+  height: 65%;
   overflow-y: scroll;
   box-shadow: 0px 7px 29px 0px black;
 }
 
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.room-filters-div {
+  margin: 8px;
+}
+
+.filter-rooms {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+#calendar {
+  cursor: pointer;
+}
+
+.close-modal {
+  padding: 0px;
+  margin: 0px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+.modal-X{
+  height: 32px;
+  width: 37px;
+
+    &:hover{
+      transform: scale(1.1)
+    }
+}

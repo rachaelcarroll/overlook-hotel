@@ -12,11 +12,11 @@ import Room from './Room'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
-import './images/main-photo.jpg'
+import './images/overlook.jpg'
 // import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -45,14 +45,14 @@ window.addEventListener('load', function() {
 const userLogin = document.getElementById('username-input')
 const loginBtn = document.getElementById('loginBtn')
 const loginError = document.getElementById('loginError')
-const password = document.getElementById('password')
+const password = document.getElementById('password-input')
 const loginPage = document.getElementById('loginPage')
 const mainDashboard = document.getElementById('dashboardView')
 const userGreeting = document.getElementById('userGreeting')
 const totalSpent = document.getElementById('totalSpent')
 const nf = Intl.NumberFormat();
 loginBtn.addEventListener('click', (event) => {
-    loadHotel(event)
+    validateLogin(event)
 })
 
 // const renderBookings = () => {
@@ -69,9 +69,15 @@ const renderSpent = () => {
     totalSpent.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
 }
-const loadHotel = (event) => {
-    event.preventDefault();
-    console.log(hotel)
+const setDate = () => {
+    currentDate = new Date();
+    console.log(currentDate = new Date())
+    formattedDate = currentDate.toDateString();
+    console.log(formattedDate)
+}
+
+const loadHotel = () => {
+    setDate();
     currentCustomer = hotel.customers.find(customer => customer.username === userLogin.value)
     hide(loginPage)
     show(mainDashboard)
@@ -81,37 +87,28 @@ const loadHotel = (event) => {
 }
 
 
-const validateLogin = () => {
-    if(userLogin.value.includes('customer') && userLogin.value.includes(hotel.customers.some(customer => customer.id)) && password.value === 'overlook2021') {
+const validateLogin = (event) => {
+    event.preventDefault();
+    let customerLogin = userLogin.value.split('r');
+    console.log(customerLogin)
+    if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && password.value === 'overlook2021') {
         loadHotel();
     } else {
         show(loginError);
-    }
+    }   
 }
 
 
 
-console.log(currentDate = new Date())
-let formattedDate = currentDate.toDateString()
-console.log(formattedDate)
-
 //renderPage 
-//hotel.user.bookings --> render to the display rooms cards 
-//innertext of greeting will be currentCustomer.getFirstName()
-    // getFirstName() {
-    //     var name = this.name.split(' ');
-    //     return name[0].toUpperCase();
-    //   }
-//innertext of $$ spends should be total bookings cost
-//when booking a new stay... that room data will be added to customer.bookings array 
+//hotel.user.bookings --> render to the display reservations
+
 //new booking needs to be POST to the http://localhost:3001/api/v1/bookings	...
 // { "userID": 48, "date": "2019/09/23", "roomNumber": 4 }
 
 
 
-
 //DOM stuff
-//on successful login -- hide login page -- render main dashboard... 
 //on logout -- clear page? hide dashboard, show login page...
 //when click new booking -- modal popup? or hide displayRooms (change this name) and show all rooms
 
@@ -137,7 +134,7 @@ const handleDropDown = (event) => {
         console.log('boooked')
         show(modal)
     } else if(event.target.value === 'sign-out') {
-        console.log('signed out')
+        accountMenu.value = 'reservations';
         hide(mainDashboard)
         show(loginPage)
     }
