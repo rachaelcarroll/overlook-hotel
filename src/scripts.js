@@ -9,7 +9,7 @@ import apiCalls from './apiCalls'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import './images/main-photo.jpg'
-import { ModuleGraph } from 'webpack';
+// import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms;
@@ -86,17 +86,17 @@ accountMenu.addEventListener('change', (event) => {
     handleDropDown(event)
 })
 
-// const show = (element) => {
-//     element.classList.remove('hidden');
-// }
+const show = (element) => {
+    element.classList.remove('hidden');
+}
 
-// const hide  = (element) => {
-//     element.classList.add('hidden');
-// }
+const hide  = (element) => {
+    element.classList.add('hidden');
+}
 
 const handleDropDown = (event) => {
     if(event.target.value === 'book-room') {
         console.log('boooked')
-        // show(modal)
+        show(modal)
     }
 }
