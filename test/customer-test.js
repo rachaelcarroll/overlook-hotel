@@ -93,6 +93,10 @@ describe('Customer', function() {
         expect(customer1.name).to.equal('Leatha Ullrich');
       });
 
+      it('should have login credentials', function() {
+        expect(customer2.username).to.equal('customer2');
+      });
+
       it('should hold customers booking data', function() {
         expect(customer1.bookings).to.deep.equal(bookingArray);
       });
