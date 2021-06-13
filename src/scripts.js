@@ -288,9 +288,23 @@ const placeholderImage = document.getElementById('roomsPlaceholder')
 const roomTypeSelect = document.getElementById('filterRooms')
 const dateSelect = document.getElementById('calendar')
 const availableRooms = document.getElementById('roomsAvailable')
+const modalX = document.getElementById('close')
+const modalBox = document.getElementById('modalContent')
+modalBox.addEventListener('click', (event) => {
+    determineModalClick(event)
+})
 roomTypeSelect.addEventListener('change', (event => {
     filterRoomType(event)
 }))
+
+const determineModalClick = (event) => {
+    event.preventDefault();
+    if (event.target.id === 'close') {
+        console.log('hello')
+        hide(modal);
+        renderReservations('all')
+    }
+}
 
 const renderAvailableRooms = (type) => {
     availableRooms.innerHTML = '';
@@ -304,7 +318,7 @@ const renderAvailableRooms = (type) => {
               <img src='images/Room${room.number}.jpg'>
             </div>
             <div class='room-type'>
-              <h5>${room.roomType} #${room.number}</h5>
+              <h5>${room.roomType.toUpperCase()} #${room.number}</h5>
               <p>DETAILS:</p>
               <p>${renderBeds(room)}</p>
             </div>
@@ -327,5 +341,7 @@ const filterRoomType = (event) => {
         renderAvailableRooms('junior suite')
     } else if (event.target.value === 'single room') {
         renderAvailableRooms('single room')
-    } 
+    } else if (event.target.value === 'suite') {
+        renderAvailableRooms('suite')
+    }
 }
