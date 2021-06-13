@@ -79,31 +79,48 @@ const setDate = () => {
     console.log(formattedDate)
 }
 
+
+const determineBeds = (room) => {
+    if (room.numBeds > 1) {
+        return `This room has ${room.numBeds} ${room.bedSize} beds.`;
+      }
+      return `This room has ${room.numBeds} ${room.bedSize} bed.`
+    }
+
+
+
 const renderReservations = () => {
+    currentCustomer.sortBookingsByDate();
     currentCustomer.bookings.map(booking => {
-        roomsDisplay.innerHTML += `      
-    <article class='reservation-card' id='reservationCard'>
-        <article class='reserved-room' id='reservedRoom'>
-          <div class='room-photo'>
-            <img src='images/overlook.jpg'>
-          </div>
-          <div class='room-type'>
-            <h5>${booking.roomType} #${booking.roomNumber}</h5>
-            <p>This room includes complimentary breakfast & happy hour</p>
-            <select class='reservation-num' id='reservationNum'>
-              <option selected='true'>Reservation ID</option>
-              <option value='reservation-id'>${booking.id}</option>
-            </select>
-            <p class='reso-date'>We're looking forward to having you as our guest on ${booking.date}</p></p>
-          </div>
-          <div class='room-cost'>
-            <p class='nightly-cost'>$$</p>
-            <p>per night</p>
-          </div>
-        </article>
-      </article>`
-    }).join(''); 
+       allRooms.map(room => {
+            if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                roomsDisplay.innerHTML += `      
+           <article class='reservation-card' id='reservationCard'>
+               <article class='reserved-room' id='reservedRoom'>
+                 <div class='room-photo'>
+                   <img src='images/overlook.jpg'>
+                 </div>
+                 <div class='room-type'>
+                   <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
+                   <p class='room-beds'>${determineBeds(room)}</p>
+                   <select class='reservation-num' id='reservationNum'>
+                     <option selected='true'>Reservation ID</option>
+                     <option value='reservation-id'>${booking.id}</option>
+                   </select>
+                   <p class='reso-date'>We're looking forward to having you as our guest on ${booking.date}</p></p>
+                 </div>
+                 <div class='room-cost'>
+                   <p class='nightly-cost'>$${room.costPerNight}</p>
+                   <p>per night</p>
+                 </div>
+               </article>
+             </article>`
+           }
+        
+       }).join('');
+    })
 }
+
 
 const loadHotel = () => {
     setDate();
