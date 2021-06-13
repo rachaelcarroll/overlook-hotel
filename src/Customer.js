@@ -60,6 +60,7 @@ class Customer {
         console.log(newBooking)
       }
 
+
     sortBookingsByDate() {
     this.bookings.sort((a, b) => {
         return a.date > b.date ? -1 : 1;
