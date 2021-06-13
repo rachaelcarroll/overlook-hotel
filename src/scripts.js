@@ -80,7 +80,7 @@ const setDate = () => {
 }
 
 
-const determineBeds = (room) => {
+const renderBeds = (room) => {
     if (room.numBeds > 1) {
         return `This room has ${room.numBeds} ${room.bedSize} beds.`;
       }
@@ -102,7 +102,7 @@ const renderReservations = () => {
                  </div>
                  <div class='room-type'>
                    <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
-                   <p class='room-beds'>${determineBeds(room)}</p>
+                   <p class='room-beds'>${renderBeds(room)}</p>
                    <select class='reservation-num' id='reservationNum'>
                      <option selected='true'>Reservation ID</option>
                      <option value='reservation-id'>${booking.id}</option>
