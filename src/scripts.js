@@ -13,6 +13,33 @@ import Room from './Room'
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/turing-logo.png'
 import './images/overlook.jpg'
+import './images/Room1.jpg'
+import './images/Room2.jpg'
+import './images/Room3.jpg'
+import './images/Room4.jpg'
+import './images/Room5.jpg'
+import './images/Room6.jpg'
+import './images/Room7.jpg'
+import './images/Room8.jpg'
+import './images/Room9.jpg'
+import './images/Room10.jpg'
+import './images/Room11.jpg'
+import './images/Room12.jpg'
+import './images/Room13.jpg'
+import './images/Room14.jpg'
+import './images/Room15.jpg'
+import './images/Room16.jpg'
+import './images/Room17.jpg'
+import './images/Room18.jpg'
+import './images/Room19.jpg'
+import './images/Room20.jpg'
+import './images/Room21.jpg'
+import './images/Room22.jpg'
+import './images/Room23.jpg'
+import './images/Room24.jpg'
+import './images/Room25.jpg'
+
+
 // import { ModuleGraph } from 'webpack';
 
 console.log('This is the JavaScript entry file - your code begins here.');
@@ -98,7 +125,7 @@ const renderReservations = () => {
            <article class='reservation-card' id='reservationCard'>
                <article class='reserved-room' id='reservedRoom'>
                  <div class='room-photo'>
-                   <img src='images/overlook.jpg'>
+                   <img src='images/${room.number}.jpg'>
                  </div>
                  <div class='room-type'>
                    <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
