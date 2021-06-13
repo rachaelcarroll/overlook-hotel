@@ -45,12 +45,15 @@
         </article>
       </section>
     </nav>
-    <article class='modal hidden' id='modal'>
-      <section class='modal-content' id='modalContent'>
+    <section class='modal hidden' id='modal'>
+      <article class='modal-content' id='modalContent'>
         <header class='modal-header' id='modalHeader'>
           <button class='close-modal' aria-label="close-modal">
             <img class='modal-X' src="https://img.icons8.com/fluent-systems-filled/48/000000/x.png"/>
           </button>
+        </header>
+        <section class='choose-stay' id='chooseStay'>
+          <p>Please select a desired room and date:</p>
           <div class='room-filters-div'>
           <select class='filter-rooms' id='filterRooms' required>
             <option selected='true' disabled='disabled'>Choose A Room</option>
@@ -58,13 +61,15 @@
             <option value='suite'>Suite</option>
             <option value='single room'>Single Room</option>
             <option value='junior suite'>Junior Suite</option>
-            <option value='all'>All Available</option>
           </select>
           <input type="date" id="calendar" name="calendar" value="2021-06-15" min="2021-06-15">
         </div>
-        </header>
-      </section>
-    </article>
+        </section>
+        <section class='rooms-available' id='roomsAvailable'>
+          <img class='rooms-placeholder' id='roomsPlaceholder' src='images/main-photo.jpg' style='max-width: 100%'>
+        </section>
+      </article>
+    </section>
     <section class='grid-container' id='gridContainer'>
       <aside class='reservation-area' id='reservationArea'>
         <section class='reservation-details' id='reservationDetails'>
@@ -74,7 +79,7 @@
             <p class='total-spent' id='totalSpent'></p>
             <p class='reward-points' id='rewardPoints'></p>
             <select class='view-resos' id='viewResos'>
-              <option selected='true' >View All Reservations</option>
+              <option value='all-reservations' selected='true' >View All Reservations</option>
               <option value='upcoming'>Upcoming</option>
               <option value='past'>Past</option>
             </select>

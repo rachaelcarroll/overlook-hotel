@@ -3,6 +3,7 @@
 
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
+import dayjs from 'dayjs' 
 
 import apiCalls from './apiCalls'
 import Booking from './Booking'
@@ -11,8 +12,8 @@ import Hotel from './Hotel'
 import Room from './Room'
 
 // An example of how you tell webpack to use an image (also need to link to it in the index.html)
-import './images/turing-logo.png'
 import './images/overlook.jpg'
+import './images/main-photo.jpg'
 import './images/Room1.jpg'
 import './images/Room2.jpg'
 import './images/Room3.jpg'
@@ -39,17 +40,14 @@ import './images/Room23.jpg'
 import './images/Room24.jpg'
 import './images/Room25.jpg'
 
-
-// import { ModuleGraph } from 'webpack';
-
-console.log('This is the JavaScript entry file - your code begins here.');
+// --------GLOBAL VARIABLES---------
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
         let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
         return new Customer(customer, correlatedBookings)
-})
+  })
 }
 
 window.addEventListener('load', function() {
@@ -83,9 +81,6 @@ loginBtn.addEventListener('click', (event) => {
     validateLogin(event)
 })
 
-// const renderBookings = () => {
-
-// }
 
 const greetCustomer = () => {
     userGreeting.innerText = ''
@@ -109,43 +104,135 @@ const setDate = () => {
 
 const renderBeds = (room) => {
     if (room.numBeds > 1) {
-        return `This room has ${room.numBeds} ${room.bedSize} beds.`;
+        return `This room has ${room.numBeds} ${room.bedSize} beds.`
       }
       return `This room has ${room.numBeds} ${room.bedSize} bed.`
     }
 
+const renderResoDate = (booking) => {
+const stringDate = new Date(booking.date).toDateString();
+console.log(currentDate)
+    if (dayjs(`${booking.date}`).isBefore(currentDate)) {
+        return `Thank you for being our guest on ${stringDate}!`
+    } else {
+        return `We look forward to having you as our guest on ${stringDate}!`
+    }
+}
 
+const resoOptions = document.getElementById('viewResos');
+resoOptions.addEventListener('change', (event) => {
+    handleResoDropDown(event);
+})
 
-const renderReservations = () => {
-    currentCustomer.sortBookingsByDate();
-    currentCustomer.bookings.map(booking => {
-       allRooms.map(room => {
-            if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
-                roomsDisplay.innerHTML += `      
-           <article class='reservation-card' id='reservationCard'>
-               <article class='reserved-room' id='reservedRoom'>
-                 <div class='room-photo'>
-                   <img src='images/${room.number}.jpg'>
-                 </div>
-                 <div class='room-type'>
-                   <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
-                   <p class='room-beds'>${renderBeds(room)}</p>
-                   <select class='reservation-num' id='reservationNum'>
-                     <option selected='true'>Reservation ID</option>
-                     <option value='reservation-id'>${booking.id}</option>
-                   </select>
-                   <p class='reso-date'>We're looking forward to having you as our guest on ${booking.date}</p></p>
-                 </div>
-                 <div class='room-cost'>
-                   <p class='nightly-cost'>$${room.costPerNight}</p>
-                   <p>per night</p>
-                 </div>
-               </article>
-             </article>`
-           }
-        
-       }).join('');
-    })
+const renderReservations = (type) => {
+
+    if (type === 'all') {
+        roomsDisplay.innerHTML = '';
+        currentCustomer.sortBookingsByDate();
+        currentCustomer.bookings.map(booking => {
+           allRooms.map(room => {
+                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                    roomsDisplay.innerHTML += `      
+               <article class='reservation-card' id='reservationCard'>
+                   <article class='reserved-room' id='reservedRoom'>
+                     <div class='room-photo'>
+                       <img src='images/Room${room.number}.jpg'>
+                     </div>
+                     <div class='room-type'>
+                       <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
+                       <p class='room-beds'>${renderBeds(room)}</p>
+                       <select class='reservation-num' id='reservationNum'>
+                         <option selected='true'>Reservation ID</option>
+                         <option value='reservation-id'>${booking.id}</option>
+                       </select>
+                       <p class='reso-date'>${renderResoDate(booking)}</p></p>
+                     </div>
+                     <div class='room-cost'>
+                       <p class='nightly-cost'>$${room.costPerNight}</p>
+                       <p>per night</p>
+                     </div>
+                   </article>
+                 </article>`
+               }  
+           }).join('');
+        })
+    } else if (type === 'past') {
+        roomsDisplay.innerHTML = '';
+        let previousStays = currentCustomer.bookings.filter(booking => dayjs(`${booking.date}`).isBefore(currentDate))
+        console.log(previousStays)
+        previousStays.map(booking => {
+           allRooms.map(room => {
+                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                    roomsDisplay.innerHTML += `      
+               <article class='reservation-card' id='reservationCard'>
+                   <article class='reserved-room' id='reservedRoom'>
+                     <div class='room-photo'>
+                       <img src='images/Room${room.number}.jpg'>
+                     </div>
+                     <div class='room-type'>
+                       <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
+                       <p class='room-beds'>${renderBeds(room)}</p>
+                       <select class='reservation-num' id='reservationNum'>
+                         <option selected='true'>Reservation ID</option>
+                         <option value='reservation-id'>${booking.id}</option>
+                       </select>
+                       <p class='reso-date'>${renderResoDate(booking)}</p></p>
+                     </div>
+                     <div class='room-cost'>
+                       <p class='nightly-cost'>$${room.costPerNight}</p>
+                       <p>per night</p>
+                     </div>
+                   </article>
+                 </article>`
+               }  
+           }).join('');
+        })
+    } else if (type === 'upcoming') {
+        let upcomingStays = currentCustomer.bookings.filter(booking => dayjs(`${booking.date}`).isAfter(currentDate))
+        console.log(upcomingStays)
+        if (upcomingStays = []) {
+            roomsDisplay.innerHTML = "You have no upcoming stays booked!";
+        } else 
+        upcomingStays.map(booking => {
+           allRooms.map(room => {
+                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                    roomsDisplay.innerHTML += `      
+               <article class='reservation-card' id='reservationCard'>
+                   <article class='reserved-room' id='reservedRoom'>
+                     <div class='room-photo'>
+                       <img src='images/Room${room.number}.jpg'>
+                     </div>
+                     <div class='room-type'>
+                       <h5>${room.roomType.toUpperCase()} #${booking.roomNumber}</h5>
+                       <p class='room-beds'>${renderBeds(room)}</p>
+                       <select class='reservation-num' id='reservationNum'>
+                         <option selected='true'>Reservation ID</option>
+                         <option value='reservation-id'>${booking.id}</option>
+                       </select>
+                       <p class='reso-date'>${renderResoDate(booking)}</p></p>
+                     </div>
+                     <div class='room-cost'>
+                       <p class='nightly-cost'>$${room.costPerNight}</p>
+                       <p>per night</p>
+                     </div>
+                   </article>
+                 </article>`
+               }  
+           }).join('');
+        })
+    }
+}
+
+const handleResoDropDown = (event) => {
+    if (event.target.value === 'upcoming') {
+        console.log("UPCOMING")
+        return renderReservations('upcoming')
+    } else if (event.target.value === 'past') {
+        return renderReservations('past');
+    } else {
+        return renderReservations('all');
+    }
+
 }
 
 
@@ -156,7 +243,7 @@ const loadHotel = () => {
     show(mainDashboard)
     renderSpent()
     greetCustomer();
-    renderReservations();
+    renderReservations('all');
 }
 
 
@@ -176,7 +263,7 @@ const accountMenu = document.getElementById('accountOptions')
 const modal = document.getElementById('modal')
 
 accountMenu.addEventListener('change', (event) => {
-    handleDropDown(event)
+    handleAccountDropDown(event)
 })
 
 const show = (element) => {
@@ -187,7 +274,7 @@ const hide  = (element) => {
     element.classList.add('hidden');
 }
 
-const handleDropDown = (event) => {
+const handleAccountDropDown = (event) => {
     if(event.target.value === 'book-room') {
         console.log('boooked')
         show(modal)
@@ -197,5 +284,48 @@ const handleDropDown = (event) => {
         show(loginPage)
     }
 }
+const placeholderImage = document.getElementById('roomsPlaceholder')
+const roomTypeSelect = document.getElementById('filterRooms')
+const dateSelect = document.getElementById('calendar')
+const availableRooms = document.getElementById('roomsAvailable')
+roomTypeSelect.addEventListener('change', (event => {
+    filterRoomType(event)
+}))
 
+const renderAvailableRooms = (type) => {
+    availableRooms.innerHTML = '';
+    allRooms.filter(room => {
+        if (room.roomType === type) {
+            return availableRooms.innerHTML +=   
+            `
+        <article class='room-card' id='roomCard'>
+          <article class='available-room' id='availableRoom'>
+            <div class='room-photo'>
+              <img src='images/Room${room.number}.jpg'>
+            </div>
+            <div class='room-type'>
+              <h5>${room.roomType} #${room.number}</h5>
+              <p>DETAILS:</p>
+              <p>${renderBeds(room)}</p>
+            </div>
+            <div class='room-cost'>
+              <p class='nightly-cost'>$${room.costPerNight}</p>
+              <p>per night</p>
+            </div>
+            <button>Book Room</button>
+          </article>
+        </article>`
+        }
+    })
+}
 
+const filterRoomType = (event) => {
+    hide(placeholderImage)
+    if (event.target.value === 'residential suite') {
+        renderAvailableRooms('residential suite')
+    } else if (event.target.value === 'junior suite') {
+        renderAvailableRooms('junior suite')
+    } else if (event.target.value === 'single room') {
+        renderAvailableRooms('single room')
+    } 
+}
