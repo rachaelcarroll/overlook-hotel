@@ -1,4 +1,4 @@
-import Booking from "./Booking";
+import Booking from '../src/Booking';
 
 class Customer {
     constructor(customerData, bookings) {
@@ -6,7 +6,6 @@ class Customer {
         this.name = customerData.name
         this.username = `customer${customerData.id}`
         this.bookings = bookings;
-        this.upcomingBookings = [];
         this.amountSpent = 0
     }
     
@@ -36,11 +35,16 @@ class Customer {
     return nf.format(this.amountSpent)
     }
 
+    correlateBookingCost(rooms, booking) {
+    let bookedRoom = rooms.find(room => room.number === booking.roomNumber)
+        return bookedRoom.costPerNight
+    }
 
-    bookRoom(booking) {
-        this.upcomingBookings.push(booking)
-      }
-
+    bookRoom(booking, rooms) {
+        this.bookings.push(booking)
+        console.log(booking)
+        this.amountSpent += this.correlateBookingCost(rooms, booking)
+    }
 
     sortBookingsByDate() {
     this.bookings.sort((a, b) => {

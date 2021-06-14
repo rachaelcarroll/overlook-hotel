@@ -31,19 +31,18 @@ const fetchAllCustomers = () => {
   }
 
 
-  const postBooking = (newBooking) => {
-    let url = 'http://localhost:3001/api/v1/bookings/'
-    fetch(url, {
+  const postBooking = (booking) => {
+    fetch('http://localhost:3001/api/v1/bookings/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newBooking)
+      body: JSON.stringify(booking)
     })
     .then(checkForError);
   }
 //   ERROR HANDLING
 
 const displayError = (errorMessage) => {
-    const error =  document.getElementById('error');
+    const error =  document.getElementById('bookingError');
     const message = errorMessage.message === 'Failed to fetch' ?
       "Internet connection may be unstable. Check again in a moment please." : errorMessage
       error.innerText = message;

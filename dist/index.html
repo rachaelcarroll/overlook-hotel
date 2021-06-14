@@ -55,8 +55,6 @@
         <section class='choose-stay' id='chooseStay'>
           <p>Please select a desired room and date:</p>
           <div class='room-filters-div'>
-              <label for="calendar"></label>
-              <input type="date" id="calendar" name="calendar" min="06-17-2021">
             <select class='filter-rooms' id='filterRooms' required>
               <option value='choose-room' selected='true' disabled='disabled'>Choose A Room</option>
               <option value='residential suite'>Residential Suite</option>
@@ -64,9 +62,13 @@
               <option value='single room'>Single Room</option>
               <option value='junior suite'>Junior Suite</option>
             </select>
+            <label for="calendar"></label>
+              <input type="date" id="calendar" name="calendar" min='' value=''>
+            <button class='search-rooms' id='searchRooms'>Search Availability</button>
           </div>
+            <p class='booking-error' id='bookingError'></p>
         </section>
-        <img class='rooms-placeholder hidden' id='roomsPlaceholder' src='images/main-photo.jpg' style='max-width: 100%'>
+          <img class='rooms-placeholder hidden' id='roomsPlaceholder' src='images/main-photo.jpg' style='max-width: 100%'>
         <section class='rooms-available' id='roomsAvailable'>
         </section>
       </article>
