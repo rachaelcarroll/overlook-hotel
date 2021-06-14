@@ -1,4 +1,4 @@
-import Booking from "./Booking";
+import Booking from '../src/Booking';
 
 class Customer {
     constructor(customerData, bookings) {
@@ -35,31 +35,16 @@ class Customer {
     return nf.format(this.amountSpent)
     }
 
+    correlateBookingCost(rooms, booking) {
+    let bookedRoom = rooms.find(room => room.number === booking.roomNumber)
+        return bookedRoom.costPerNight
+    }
 
-    bookRoom(date, roomNumber) {
-        // fetch('http://localhost:3001/api/v1/bookings', {
-        //   method: 'POST',
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({
-        //     "userID": this.id,
-        //     "date": date,
-        //     "roomNumber": roomNumber
-        //   })
-        // }).then(() => {
-        //   console.log('ROOM BOOKED!');
-        // }).catch(() => {
-        //   console.log('SOMETHING WENT WRONG');
-        // });
-        let newBooking = new Booking({ "userID": this.id,
-        "date": date,
-        "roomNumber": roomNumber })
-        
-        this.bookings.push(newBooking)
-        console.log(newBooking)
-      }
-
+    bookRoom(booking, rooms) {
+        this.bookings.push(booking)
+        console.log(booking)
+        this.amountSpent += this.correlateBookingCost(rooms, booking)
+    }
 
     sortBookingsByDate() {
     this.bookings.sort((a, b) => {

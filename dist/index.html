@@ -55,18 +55,21 @@
         <section class='choose-stay' id='chooseStay'>
           <p>Please select a desired room and date:</p>
           <div class='room-filters-div'>
-          <select class='filter-rooms' id='filterRooms' required>
-            <option selected='true' disabled='disabled'>Choose A Room</option>
-            <option value='residential suite'>Residential Suite</option>
-            <option value='suite'>Suite</option>
-            <option value='single room'>Single Room</option>
-            <option value='junior suite'>Junior Suite</option>
-          </select>
-          <input type="date" id="calendar" name="calendar" value="2021-06-15" min="2021-06-15">
-        </div>
+            <select class='filter-rooms' id='filterRooms' required>
+              <option value='choose-room' selected='true' disabled='disabled'>Choose A Room</option>
+              <option value='residential suite'>Residential Suite</option>
+              <option value='suite'>Suite</option>
+              <option value='single room'>Single Room</option>
+              <option value='junior suite'>Junior Suite</option>
+            </select>
+            <label for="calendar"></label>
+              <input type="date" id="calendar" name="calendar" min='' value=''>
+            <button class='search-rooms' id='searchRooms'>Search Availability</button>
+          </div>
+            <p class='booking-error' id='bookingError'></p>
         </section>
+          <img class='rooms-placeholder hidden' id='roomsPlaceholder' src='images/main-photo.jpg' style='max-width: 100%'>
         <section class='rooms-available' id='roomsAvailable'>
-          <img class='rooms-placeholder' id='roomsPlaceholder' src='images/main-photo.jpg' style='max-width: 100%'>
         </section>
       </article>
     </section>
@@ -83,7 +86,6 @@
               <option value='upcoming'>Upcoming</option>
               <option value='past'>Past</option>
             </select>
-            <button>Book A Stay</button>
           </div>
         </section>
       </aside>
