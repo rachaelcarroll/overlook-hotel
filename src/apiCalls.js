@@ -32,7 +32,8 @@ const fetchAllCustomers = () => {
 
 
   const postBooking = (booking) => {
-    fetch('http://localhost:3001/api/v1/bookings/', {
+    let url = 'http://localhost:3001/api/v1/bookings/'
+    fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(booking)
