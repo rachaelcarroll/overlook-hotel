@@ -95,7 +95,7 @@ const renderSpent = () => {
     rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
 const setDate = () => {
-    currentDate = dayjs(new Date()).format('YYYY/MM/DD')
+    currentDate = dayjs(new Date()).format('YYYY-MM-DD')
     console.log(currentDate)
     formattedDate = dayjs(currentDate).toString();
     console.log('format', formattedDate)
@@ -130,7 +130,7 @@ const renderReservations = (type) => {
         currentCustomer.sortBookingsByDate();
         currentCustomer.bookings.map(booking => {
            allRooms.map(room => {
-                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                if(room.number === booking.roomNumber) {
                     roomsDisplay.innerHTML += `      
                <article class='reservation-card' id='reservationCard'>
                    <article class='reserved-room' id='reservedRoom'>
@@ -161,7 +161,7 @@ const renderReservations = (type) => {
         console.log(previousStays)
         previousStays.map(booking => {
            allRooms.map(room => {
-                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+                if(room.number === booking.roomNumber) {
                     roomsDisplay.innerHTML += `      
                <article class='reservation-card' id='reservationCard'>
                    <article class='reserved-room' id='reservedRoom'>
@@ -187,14 +187,15 @@ const renderReservations = (type) => {
            }).join('');
         })
     } else if (type === 'upcoming') {
+        roomsDisplay.innerHTML = '';
         let upcomingStays = currentCustomer.bookings.filter(booking => dayjs(`${booking.date}`).isAfter(currentDate))
         console.log(upcomingStays)
-        if (upcomingStays = []) {
+        if (!upcomingStays.length) {
             roomsDisplay.innerHTML = "You have no upcoming stays booked!";
         } else 
-        upcomingStays.map(booking => {
-           allRooms.map(room => {
-                if(room.number === booking.roomNumber && room.number === booking.roomNumber) {
+        return upcomingStays.map(booking => {
+           allRooms.forEach(room => {
+                if(room.number === booking.roomNumber) {
                     roomsDisplay.innerHTML += `      
                <article class='reservation-card' id='reservationCard'>
                    <article class='reserved-room' id='reservedRoom'>
@@ -217,14 +218,13 @@ const renderReservations = (type) => {
                    </article>
                  </article>`
                }  
-           }).join('');
-        })
+           });
+        }).join('')
     }
 }
 
 const handleResoDropDown = (event) => {
     if (event.target.value === 'upcoming') {
-        console.log("UPCOMING")
         return renderReservations('upcoming')
     } else if (event.target.value === 'past') {
         return renderReservations('past');
@@ -232,7 +232,6 @@ const handleResoDropDown = (event) => {
         return renderReservations('all');
     }
 }
-
 
 const loadHotel = () => {
     setDate();
@@ -274,39 +273,61 @@ const hide  = (element) => {
 
 const handleAccountDropDown = (event) => {
     if(event.target.value === 'book-room') {
-        let dateSelect = document.getElementById('calendar').valueAsDate = new Date();
-        console.log(dateSelect)
         show(modal)
-
+        show(placeholderImage);
     } else if(event.target.value === 'sign-out') {
         accountMenu.value = 'reservations';
         hide(mainDashboard)
         show(loginPage)
+    } else {
+        accountMenu.value = 'reservations';
+        renderReservations('all');
     }
 }
 const placeholderImage = document.getElementById('roomsPlaceholder')
-const searchRooms = document.getElementById('submitSearch')
+// const searchRooms = document.getElementById('submitSearch')
 const roomTypeSelect = document.getElementById('filterRooms')
-// const dateSelect = document.getElementById('calendar')
+const dateSelect = document.getElementById('calendar')
 const availableRooms = document.getElementById('roomsAvailable')
 const modalBox = document.getElementById('modalContent')
-modalBox.addEventListener('click', (event) => {
-    determineModalClick(event)
-})
-searchRooms.addEventListener('click', (event => {
-    filterRoomType(event, type, date)
+roomTypeSelect.addEventListener('change', (event => {
+    filterRooms(event)
 }))
 
+dateSelect.addEventListener('change', (event) => {
+    filterRooms(event)
+})
 
+const clearModal = () => {
+    dateSelect.value = '';
+    roomTypeSelect.value = 'choose-room';
+    roomsAvailable.innerHTML = '';
+    hide(modal);
+    renderReservations('all');
+}
 
 const determineModalClick = (event) => {
     event.preventDefault();
     if (event.target.id === 'close') {
-        hide(modal);
+        clearModal();
         accountMenu.value = 'reservations';
-        renderReservations('all')
-    }
+    } else if (event.target.id === 'bookRoom') {
+       const bookedRoom = parseInt(event.target.closest('article').id);
+       console.log(bookedRoom)
+       let formatPostDate = dateSelect.value.split('-').join('/')
+       let newBooking = new Booking ({ "userID": currentCustomer.id,
+       "date": formatPostDate,
+       "roomNumber": bookedRoom})
+       currentCustomer.bookRoom(newBooking)
+       apiCalls.postBooking(newBooking)
+       clearModal();
+  }
 }
+
+
+modalBox.addEventListener('click', (event) => {
+    determineModalClick(event)
+})
 
 const renderAvailableRooms = (type) => {
     availableRooms.innerHTML = '';
@@ -315,7 +336,7 @@ const renderAvailableRooms = (type) => {
             return availableRooms.innerHTML +=   
             `
         <article class='room-card' id='roomCard'>
-          <article class='available-room' id='availableRoom'>
+          <article class='available-room' id='${room.number}'>
             <div class='room-photo'>
               <img src='images/Room${room.number}.jpg'>
             </div>
@@ -328,23 +349,28 @@ const renderAvailableRooms = (type) => {
               <p class='nightly-cost'>$${room.costPerNight}</p>
               <p>per night</p>
             </div>
-            <button>Book Room</button>
+            <button id='bookRoom'>Book Room</button>
           </article>
         </article>`
         }
     })
 }
 
-const filterRoomType = (event, type, date) => {
+const filterRooms = (event) => {
+    event.preventDefault();
+    hotel.roomsAvailable(dateSelect.value, allBookings)
+    console.log(dateSelect.value)
+    console.log(hotel.roomsAvailable(dateSelect.value, allBookings))
 
     hide(placeholderImage)
-    if (event.target.value === 'residential suite') {
+    if (roomTypeSelect.value === 'residential suite') {
         renderAvailableRooms('residential suite')
-    } else if (event.target.value === 'junior suite') {
+    } else if (roomTypeSelect.value  === 'junior suite') {
         renderAvailableRooms('junior suite')
-    } else if (event.target.value === 'single room') {
+    } else if (roomTypeSelect.value  === 'single room') {
         renderAvailableRooms('single room')
-    } else if (event.target.value === 'suite') {
+    } else if (roomTypeSelect.value  === 'suite') {
         renderAvailableRooms('suite')
     }
 }
+

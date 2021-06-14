@@ -6,6 +6,7 @@ class Customer {
         this.name = customerData.name
         this.username = `customer${customerData.id}`
         this.bookings = bookings;
+        this.upcomingBookings = [];
         this.amountSpent = 0
     }
     
@@ -36,13 +37,8 @@ class Customer {
     }
 
 
-    bookRoom(date, roomNumber) {
-        let newBooking = new Booking({ "userID": this.id,
-        "date": date,
-        "roomNumber": roomNumber })
-        
-        this.bookings.push(newBooking)
-        console.log(newBooking)
+    bookRoom(booking) {
+        this.upcomingBookings.push(booking)
       }
 
 

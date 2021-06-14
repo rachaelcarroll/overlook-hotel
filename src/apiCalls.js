@@ -31,6 +31,15 @@ const fetchAllCustomers = () => {
   }
 
 
+  const postBooking = (newBooking) => {
+    let url = 'http://localhost:3001/api/v1/bookings/'
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newBooking)
+    })
+    .then(checkForError);
+  }
 //   ERROR HANDLING
 
 const displayError = (errorMessage) => {
@@ -40,7 +49,7 @@ const displayError = (errorMessage) => {
       error.innerText = message;
 }
 
-const checkForError = response => {
+const checkForError = (response) => {
     if (!response.ok) {
         throw new Error('Please fill out all required fields.');
     } else {
@@ -48,4 +57,4 @@ const checkForError = response => {
     }
 }
 
-export default { getData , fetchCustomer }
+export default { getData , fetchCustomer , postBooking }

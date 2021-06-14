@@ -405,3 +405,8 @@ h1 {
   justify-content: space-between;
 }
 
+.rooms-available {
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+}
