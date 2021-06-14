@@ -62,7 +62,9 @@
             <option value='single room'>Single Room</option>
             <option value='junior suite'>Junior Suite</option>
           </select>
-          <input type="date" id="calendar" name="calendar" value="2021-06-15" min="2021-06-15">
+          <label for="calendar"></label>
+          <input type="date" id="calendar" name="calendar" value="yyyy-mm-dd" min="currentDate" required>
+          <button class='submit-search' id='submitSearch'>Search Available Rooms</button>
         </div>
         </section>
         <section class='rooms-available' id='roomsAvailable'>
@@ -83,7 +85,6 @@
               <option value='upcoming'>Upcoming</option>
               <option value='past'>Past</option>
             </select>
-            <button>Book A Stay</button>
           </div>
         </section>
       </aside>

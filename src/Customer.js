@@ -37,21 +37,6 @@ class Customer {
 
 
     bookRoom(date, roomNumber) {
-        // fetch('http://localhost:3001/api/v1/bookings', {
-        //   method: 'POST',
-        //   headers: {
-        //     "Content-Type": "application/json"
-        //   },
-        //   body: JSON.stringify({
-        //     "userID": this.id,
-        //     "date": date,
-        //     "roomNumber": roomNumber
-        //   })
-        // }).then(() => {
-        //   console.log('ROOM BOOKED!');
-        // }).catch(() => {
-        //   console.log('SOMETHING WENT WRONG');
-        // });
         let newBooking = new Booking({ "userID": this.id,
         "date": date,
         "roomNumber": roomNumber })

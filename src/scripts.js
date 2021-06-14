@@ -95,10 +95,10 @@ const renderSpent = () => {
     rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
 const setDate = () => {
-    currentDate = new Date();
-    console.log(currentDate = new Date())
-    formattedDate = currentDate.toDateString();
-    console.log(formattedDate)
+    currentDate = dayjs(new Date()).format('YYYY/MM/DD')
+    console.log(currentDate)
+    formattedDate = dayjs(currentDate).toString();
+    console.log('format', formattedDate)
 }
 
 
@@ -111,7 +111,6 @@ const renderBeds = (room) => {
 
 const renderResoDate = (booking) => {
 const stringDate = new Date(booking.date).toDateString();
-console.log(currentDate)
     if (dayjs(`${booking.date}`).isBefore(currentDate)) {
         return `Thank you for being our guest on ${stringDate}!`
     } else {
@@ -232,7 +231,6 @@ const handleResoDropDown = (event) => {
     } else {
         return renderReservations('all');
     }
-
 }
 
 
@@ -276,8 +274,10 @@ const hide  = (element) => {
 
 const handleAccountDropDown = (event) => {
     if(event.target.value === 'book-room') {
-        console.log('boooked')
+        let dateSelect = document.getElementById('calendar').valueAsDate = new Date();
+        console.log(dateSelect)
         show(modal)
+
     } else if(event.target.value === 'sign-out') {
         accountMenu.value = 'reservations';
         hide(mainDashboard)
@@ -285,23 +285,25 @@ const handleAccountDropDown = (event) => {
     }
 }
 const placeholderImage = document.getElementById('roomsPlaceholder')
+const searchRooms = document.getElementById('submitSearch')
 const roomTypeSelect = document.getElementById('filterRooms')
-const dateSelect = document.getElementById('calendar')
+// const dateSelect = document.getElementById('calendar')
 const availableRooms = document.getElementById('roomsAvailable')
-const modalX = document.getElementById('close')
 const modalBox = document.getElementById('modalContent')
 modalBox.addEventListener('click', (event) => {
     determineModalClick(event)
 })
-roomTypeSelect.addEventListener('change', (event => {
-    filterRoomType(event)
+searchRooms.addEventListener('click', (event => {
+    filterRoomType(event, type, date)
 }))
+
+
 
 const determineModalClick = (event) => {
     event.preventDefault();
     if (event.target.id === 'close') {
-        console.log('hello')
         hide(modal);
+        accountMenu.value = 'reservations';
         renderReservations('all')
     }
 }
@@ -333,7 +335,8 @@ const renderAvailableRooms = (type) => {
     })
 }
 
-const filterRoomType = (event) => {
+const filterRoomType = (event, type, date) => {
+
     hide(placeholderImage)
     if (event.target.value === 'residential suite') {
         renderAvailableRooms('residential suite')
