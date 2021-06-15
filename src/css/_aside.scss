@@ -1,0 +1,38 @@
+
+.all-resos {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  
+      h3 {
+        font-size: 20px;
+        margin: 0px 0px 16px;
+      }
+  
+      .member {
+        margin: 0px;
+      }
+  
+      .reward-points {
+        margin: 0px 0px 15px;
+      }
+  
+      button {
+        width: 110px;
+        height: 30px;
+        border-radius: 10px;
+        border: 1px solid $teal;
+        cursor: pointer;
+        margin: 10px 0px;
+  
+        &:hover {
+          background-color: $teal;
+          color: $white;
+        }
+      }
+  
+      select {
+        width: 160px;
+      }
+  }
+  

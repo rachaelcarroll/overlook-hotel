@@ -1,0 +1,91 @@
+.modal {
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+  }
+  
+  .modal-content {
+    margin: 123px;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    padding: 0px;
+    border: 1px solid #888;
+    width: 78%;
+    height: 65%;
+    overflow-y: scroll;
+    box-shadow: 0px 7px 29px 0px $black;
+  }
+  
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .room-filters-div {
+    margin: 8px;
+  }
+  
+  .filter-rooms {
+    margin-right: 8px;
+    cursor: pointer;
+  }
+  
+  #calendar {
+    cursor: pointer;
+  }
+  
+  .close-modal {
+    padding: 4px 0px;
+    margin: 0px;
+    border: none;
+    background: $white;
+    cursor: pointer;
+  }
+  
+  .modal-X{
+    height: 32px;
+    width: 37px;
+  
+      &:hover{
+        transform: scale(1.1)
+      }
+  }
+  
+  .choose-stay {
+    display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0px 10px 10px 10px;
+      justify-content: center;
+  }
+  
+  .room-card {
+    justify-content: space-between;
+    display: flex;
+    height: 220px;
+    width: 95%;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .available-room {
+    background-color: $room-card;
+    opacity: 85%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .rooms-available {
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+  }

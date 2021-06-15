@@ -1,0 +1,38 @@
+/* Media-queries */
+
+  @media only screen and (max-width: 700px) {
+
+    nav {
+      height: unset;
+    }
+  
+    h1, h2 {
+      font-size: 20px;
+    }
+
+    .grid-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: .08fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+        "aside"
+        "section"
+        "section"
+        "section"
+        "section";
+      }
+
+    .reserved-room {
+        margin-bottom: 20px;
+    }
+
+    .reservation-details {
+        height: 213px;
+        width: 90%;
+    }
+
+  
+    .reservation-details div {
+      display: flex;
+      flex-flow: wrap;
+    }
+  }
