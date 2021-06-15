@@ -35,7 +35,7 @@ import './images/Room24.jpg'
 import './images/Room25.jpg'
 
 import {
-userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, nf, show, hide, renderBeds
+userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, nf
 } from './DOM'
 
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate, newBooking;
@@ -61,8 +61,15 @@ window.addEventListener('load', function() {
         allRooms = fetchRoomsData.rooms.map(room => new Room(room))
         hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)       
     })
+    .catch(err => displayPageLevelError())
 })
 
+const displayPageLevelError = () => {
+  show(loginError)
+  loginError.innerText = `Oops, we seem to be experiencing some
+  technical difficulties!`
+  loginBtn.setAttribute("disabled", true)
+}
 
 loginBtn.addEventListener('click', (event) => {
     validateLogin(event)
@@ -76,10 +83,11 @@ const greetCustomer = () => {
 
 const renderSpent = () => {
     currentCustomer.calculateTotalSpent(allRooms);
+    console.log("spent", currentCustomer.amountSpent)
+    console.log(currentCustomer.bookings)
     totalSpent.innerText = '';
     rewardPoints.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
-    console.log(nf.format(currentCustomer.amountSpent))
     rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
 
@@ -98,12 +106,12 @@ const setDate = () => {
 }
 
 
-// const renderBeds = (room) => {
-//     if (room.numBeds > 1) {
-//         return `This room has ${room.numBeds} ${room.bedSize} beds.`
-//       }
-//       return `This room has ${room.numBeds} ${room.bedSize} bed.`
-//     }
+const renderBeds = (room) => {
+    if (room.numBeds > 1) {
+        return `This room has ${room.numBeds} ${room.bedSize} beds.`
+      }
+      return `This room has ${room.numBeds} ${room.bedSize} bed.`
+    }
 
 // const renderResoDate = (booking) => {
 // const stringDate = new Date(booking.date).toDateString();
@@ -188,7 +196,7 @@ const renderReservations = (type) => {
         if (!upcomingStays.length) {
             roomsDisplay.innerHTML = "You have no upcoming stays booked!";
         } else 
-        currentCustomer.sortBookingsByDate(upcomingStays);
+        currentCustomer.sortBookingsByDate();
         return upcomingStays.map(booking => {
            allRooms.forEach(room => {
                 if(room.number === booking.roomNumber) {
@@ -270,13 +278,13 @@ const validateLogin = (event) => {
     }   
 }
 
-// const show = (element) => {
-//     element.classList.remove('hidden');
-// }
+const show = (element) => {
+    element.classList.remove('hidden');
+}
 
-// const hide  = (element) => {
-//     element.classList.add('hidden');
-// }
+const hide  = (element) => {
+    element.classList.add('hidden');
+}
 
 const filterRooms = () => {
     hide(placeholderImage)
@@ -332,15 +340,20 @@ const clearModal = () => {
     hide(modal);
 }
 
-export const onBookingSuccess = () => {
-    currentCustomer.bookRoom(newBooking, allRooms)
-    allBookings.push(newBooking)
+export const onBookingSuccess = (event) => {
+    console.log('SUCCESS!')
+    // currentCustomer.bookRoom(newBooking, allRooms)
+    // allBookings.push(newBooking)
     renderSpent();
-    closeModal();
-    clearModal();
-    renderReservations('upcoming');
-    resoOptions.value = 'upcoming';
-    alert(`Your stay is booked!`);
+    roomsAvailable.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}!`
+    setTimeout(function() {
+        renderSpent();
+        closeModal();
+        clearModal();
+        renderReservations('upcoming');
+        resoOptions.value = 'upcoming';
+      }, 3000);
+
 }
 
 const addBooking = (date, room) => {
@@ -350,11 +363,9 @@ const addBooking = (date, room) => {
         "date": date,
         "roomNumber": room
     })
+    currentCustomer.bookRoom(newBooking, allRooms)
+    allBookings.push(newBooking)
     apiCalls.postBooking(newBooking)
-    // currentCustomer.bookRoom(newBooking, allRooms)
-    // renderSpent();
-    // closeModal();
-    // clearModal();
 }
 
 const determineRoomSelection = (event) => {
@@ -363,24 +374,14 @@ const determineRoomSelection = (event) => {
        bookedRoomNum = parseInt(event.target.closest('article').id);
        formatPostDate = dateSelect.value.split('-').join('/')
        addBooking(formatPostDate, bookedRoomNum)
-     
-    //    if (apiCalls.postBooking(newBooking)) {
-    //        clearModal();
-    //        closeModal();
-            //renderSpent();
-    //        alert(`Your stay is booked! We'll see you on ${dateSelect.value.toDateString()}`);
-
-    //     } else {
-       
-    //     const error = document.getElementById('bookingError').innerText = `Something went wrong, please try again.`
-    // }
-}
+  }
 }
 
 const closeModal = () => {
     clearModal();
     accountMenu.value = 'reservations';
     resoOptions.value = 'all-reservations';
+    error.innerText = '';
 }
 
 modalX.addEventListener('click', () => {
@@ -393,11 +394,11 @@ availableRooms.addEventListener('click', (event) => {
 
 // const error = document.getElementById('bookingError')
 
-export const showBookingError = (response) => {
-        if (response.status === 404 || response.status === 422) {
-          error.innerText =
-            'Something went wrong, please try again.'; 
-        } else {
-           error.innerText = "It's not you, it's us... please try again.";
-        }
-      }
+// export const showBookingError = (response) => {
+//         if (response.status === 404 || response.status === 422) {
+//           error.innerText =
+//             'Something went wrong, please try again.'; 
+//         } else {
+//            error.innerText = "It's not you, it's us... please try again.";
+//         }
+//       }
