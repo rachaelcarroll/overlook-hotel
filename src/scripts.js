@@ -41,7 +41,7 @@ import './images/Room24.jpg'
 import './images/Room25.jpg'
 
 // --------GLOBAL VARIABLES---------
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate;
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate, newBooking;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -97,7 +97,7 @@ const renderSpent = () => {
 }
 const setDate = () => {
     currentDate = dayjs(new Date()).format('YYYY-MM-DD')
-    formattedDate = dayjs(currentDate).toString();
+    // formattedDate = dayjs(currentDate).toString();
 }
 
 
@@ -192,6 +192,7 @@ const renderReservations = (type) => {
         if (!upcomingStays.length) {
             roomsDisplay.innerHTML = "You have no upcoming stays booked!";
         } else 
+        currentCustomer.sortBookingsByDate(upcomingStays);
         return upcomingStays.map(booking => {
            allRooms.forEach(room => {
                 if(room.number === booking.roomNumber) {
@@ -294,34 +295,29 @@ const availableRooms = document.getElementById('roomsAvailable')
 const modalX = document.getElementById('close')
 
 
-// roomTypeSelect.addEventListener('change', (event => {
-//     filterRooms(event)
-// }))
 const clearSelections = () => {
     dateSelect.value = '';
-    roomTypeSelect.value = '';
+    roomTypeSelect.value = 'choose-room';
 }
 const filterRooms = () => {
     hide(placeholderImage)
+    formattedDate = dayjs(`${dateSelect.value}`).format('YYYY/MM/DD')
+    console.log(formattedDate)
     if (roomTypeSelect.value === 'residential suite') {
-        renderRooms('residential suite', dateSelect.value)
+        renderRooms('residential suite', formattedDate)
     } else if (roomTypeSelect.value  === 'junior suite') {
-        renderRooms('junior suite', dateSelect.value)
+        renderRooms('junior suite', formattedDate)
     } else if (roomTypeSelect.value  === 'single room') {
-        renderRooms('single room', dateSelect.value)
+        renderRooms('single room', formattedDate)
     } else if (roomTypeSelect.value  === 'suite') {
-        renderRooms('suite', dateSelect.value)
+        renderRooms('suite', formattedDate)
     }
 }
 const renderRooms = (type, date) => {
-    hotel.roomsAvailable(date, allBookings)
-    console.log(dateSelect.value)
-    console.log(hotel.roomsAvailable(dateSelect.value, allBookings))
+    hotel.findAvailableRooms(allBookings, date)
+    console.log(hotel.findAvailableRooms(allBookings, date))
     availableRooms.innerHTML = '';
-    if (!hotel.roomsAvailable(dateSelect.value, allBookings)) {
-       return error.innerText = `We are all booked on that date, please try again.`
-    } else {
-        hotel.roomsAvailable(dateSelect.value, allBookings).filter(room => 
+    hotel.findAvailableRooms(allBookings, date).filter(room => 
             room.roomType === type).map(room => {
                 return availableRooms.innerHTML +=   
                     `
@@ -343,9 +339,9 @@ const renderRooms = (type, date) => {
                   </article>
                 </article>`
             }) 
+        //   clearSelections();
         }
-        // clearSelections();
-    }
+
 
 searchRooms.addEventListener('click', () => {
     filterRooms()
@@ -361,21 +357,30 @@ const clearModal = () => {
     roomTypeSelect.value = 'choose-room';
     roomsAvailable.innerHTML = '';
     hide(modal);
-    renderReservations('all');
+}
+
+export const onBookingSuccess = () => {
+    currentCustomer.bookRoom(newBooking, allRooms)
+    renderSpent();
+    closeModal();
+    clearModal();
+    renderReservations('upcoming');
+    alert(`Your stay is booked!`);
+
 }
 
 const addBooking = (date, room) => {
-    let newBooking = new Booking ({
+    newBooking = new Booking ({
         "id": Date.now(),
         "userID": currentCustomer.id,
         "date": date,
         "roomNumber": room
     })
     apiCalls.postBooking(newBooking)
-    currentCustomer.bookRoom(newBooking, allRooms)
-    renderSpent();
-    closeModal();
-    clearModal();
+    // currentCustomer.bookRoom(newBooking, allRooms)
+    // renderSpent();
+    // closeModal();
+    // clearModal();
 }
 
 const determineRoomSelection = (event) => {
@@ -411,3 +416,14 @@ modalX.addEventListener('click', () => {
 availableRooms.addEventListener('click', (event) => {
     determineRoomSelection(event)
 })
+
+const error = document.getElementById('bookingError')
+
+export const showBookingError = (response) => {
+        if (response.status === 404 || response.status === 422) {
+          error.innerText =
+            'Something went wrong, please try again.'; 
+        } else {
+           error.innerText = "It's not you, it's us... please try again.";
+        }
+      }

@@ -46,7 +46,12 @@ class Customer {
         this.amountSpent += this.correlateBookingCost(rooms, booking)
     }
 
-    sortBookingsByDate() {
+    sortBookingsByDate(otherbookings) {
+    if(otherbookings) {
+        otherbookings.sort((a, b) => {
+         return a.date > b.date ? 1 : -1;
+        })
+    } else
     this.bookings.sort((a, b) => {
         return a.date > b.date ? -1 : 1;
         })
