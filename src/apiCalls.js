@@ -53,4 +53,4 @@ const checkForError = (response) => {
     }
 }
 
-export default { getData , postBooking, fetchBookings }
+export default { getData , postBooking }

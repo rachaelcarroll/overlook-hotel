@@ -111,17 +111,22 @@ describe('Customer', function() {
 
       it('should return the total cost of all bookings', function () {
         customer1.calculateTotalSpent(roomsArray)
-        expect(customer1.amountSpent).to.equal(700.00)
+        expect(customer1.amountSpent).to.equal('700.00')
       })
 
       it('should be able to book a new reservation', function() {
-        customer2.bookRoom("Wed Jan 01 2021", 14)
+        customer2.bookRoom({
+          "id": Date.now(),
+          "userID": 2,
+          "date": "2021/06/15",
+          "roomNumber": 13
+        }, roomsArray)
         expect(customer2.bookings.length).to.equal(3);
       })
 
-      it('should sort bookings by date', function () {
+      it.only('should sort bookings by date', function () {
         customer2.sortBookingsByDate()
-        expect(customer2.bookings[1]).to.equal(booking3)
+        expect(customer2.bookings[1]).to.equal(booking4)
       });
 });
 

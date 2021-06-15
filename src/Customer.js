@@ -1,4 +1,5 @@
 import Booking from '../src/Booking';
+import Room from '../src/Room';
 
 class Customer {
     constructor(customerData, bookings) {
@@ -31,14 +32,15 @@ class Customer {
        }, 0)
     
     this.amountSpent = cost.toFixed(2)
-    const nf = Intl.NumberFormat();
-    return nf.format(this.amountSpent)
+    // const nf = Intl.NumberFormat();
+    console.log(this.amountSpent)
+    return this.amountSpent
     }
 
-    correlateBookingCost(rooms, booking) {
-    let bookedRoom = rooms.find(room => room.number === booking.roomNumber)
-        return bookedRoom.costPerNight
-    }
+    // correlateBookingCost(rooms, booking) {
+    // let bookedRoom = rooms.find(room => room.number === booking.roomNumber)
+    //     return bookedRoom.costPerNight
+    // }
 
     bookRoom(booking, rooms) {
         this.bookings.push(booking)
