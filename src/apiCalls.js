@@ -6,29 +6,22 @@ import {
 const fetchAllCustomers = () => {
     return fetch('http://localhost:3001/api/v1/customers')
       .then(response => response.json())
-      .catch(err => console.error("not working"))
+      .catch(err => displayError(err))
   }
   const fetchRooms = () => {
     return fetch('http://localhost:3001/api/v1/rooms')
       .then(response => response.json())
-      .catch(err => console.error("not working"))
+      .catch(err => displayError(err))
   }
   const fetchBookings = () => {
     return fetch('http://localhost:3001/api/v1/bookings')
       .then(response => response.json())
-      .catch(err => console.error("not working"))
+      .catch(err => displayError(err))
   }
-
-  // const fetchCustomer = (id) => {
-  //   return fetch(`http://localhost:3001/api/v1/customers/${id}`)
-  //     .then(response => response.json())
-  //     .catch(err => console.error("not working"))
-  // }
 
   const getData = () => {
     return Promise.all([fetchAllCustomers(), fetchRooms(), fetchBookings()])
   }
-
 
   const postBooking = (booking) => {
     let url = 'http://localhost:3001/api/v1/bookings/'
@@ -41,6 +34,7 @@ const fetchAllCustomers = () => {
     .then(() => onBookingSuccess())
     .catch((err) => displayError(err));
   }
+
 //   ERROR HANDLING
 
 const displayError = (errorMessage) => {
@@ -59,6 +53,4 @@ const checkForError = (response) => {
     }
 }
 
-
-
-export default { getData , postBooking }
+export default { getData , postBooking, fetchBookings }
