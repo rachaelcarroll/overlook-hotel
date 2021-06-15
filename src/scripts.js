@@ -296,8 +296,11 @@ const renderRooms = (type, date) => {
     hotel.findAvailableRooms(allBookings, date)
     console.log(hotel.findAvailableRooms(allBookings, date))
     availableRooms.innerHTML = '';
-    hotel.findAvailableRooms(allBookings, date).filter(room => 
-            room.roomType === type).map(room => {
+    let available = hotel.findAvailableRooms(allBookings, date).filter(room => 
+            room.roomType === type)
+    if (!available.length) {
+        availableRooms.innerHTML += `Sorry, all ${type}s are booked on this date, please select another room type.`
+    } else available.map(room => {
                 return availableRooms.innerHTML +=   
                     `
                 <article class='room-card' id='roomCard'>
