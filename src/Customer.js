@@ -1,5 +1,3 @@
-import Booking from '../src/Booking';
-
 class Customer {
     constructor(customerData, bookings) {
         this.id = customerData.id
@@ -9,9 +7,8 @@ class Customer {
         this.amountSpent = 0
     }
     
-    
     getFirstName() {
-        var name = this.name.split(' ');
+        const name = this.name.split(' ');
         return name[0];
     }
 
@@ -31,8 +28,7 @@ class Customer {
        }, 0)
     
     this.amountSpent = cost.toFixed(2)
-    const nf = Intl.NumberFormat();
-    return nf.format(this.amountSpent)
+    return this.amountSpent
     }
 
     correlateBookingCost(rooms, booking) {
@@ -42,23 +38,14 @@ class Customer {
 
     bookRoom(booking, rooms) {
         this.bookings.push(booking)
-        console.log(booking)
         this.amountSpent += this.correlateBookingCost(rooms, booking)
     }
 
     sortBookingsByDate(otherbookings) {
-    if(otherbookings) {
-        otherbookings.sort((a, b) => {
-         return a.date > b.date ? 1 : -1;
-        })
-    } else
     this.bookings.sort((a, b) => {
-        return a.date > b.date ? -1 : 1;
+        return a.date > b.date ? 1 : -1;
         })
     }
 }
-
-
-
 
 export default Customer;

@@ -61,7 +61,7 @@ describe('Booking', function() {
 
   it('should hold a date', function() {
 
-    expect(booking4.date).to.equal("Wed Jan 22 2020");
+    expect(booking4.date).to.equal("2020/01/22");
   });
 
   it('should hold a room number', function() {
