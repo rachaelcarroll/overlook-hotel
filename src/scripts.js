@@ -1,17 +1,11 @@
-// This is the JavaScript entry file - your code begins here
-// Do not delete or rename this file ********
-
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 import dayjs from 'dayjs' 
-
 import apiCalls from './apiCalls'
 import Booking from './Booking'
 import Customer from './Customer'
 import Hotel from './Hotel'
 import Room from './Room'
 
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import './images/overlook.jpg'
 import './images/main-photo.jpg'
 import './images/Room1.jpg'
@@ -40,8 +34,11 @@ import './images/Room23.jpg'
 import './images/Room24.jpg'
 import './images/Room25.jpg'
 
-// --------GLOBAL VARIABLES---------
-let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate;
+import {
+userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, nf, show, hide, renderBeds
+} from './DOM'
+
+let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate, newBooking;
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -67,16 +64,6 @@ window.addEventListener('load', function() {
 })
 
 
-const userLogin = document.getElementById('username-input')
-const loginBtn = document.getElementById('loginBtn')
-const loginError = document.getElementById('loginError')
-const password = document.getElementById('password-input')
-const loginPage = document.getElementById('loginPage')
-const mainDashboard = document.getElementById('dashboardView')
-const userGreeting = document.getElementById('userGreeting')
-const totalSpent = document.getElementById('totalSpent')
-const rewardPoints = document.getElementById('rewardPoints')
-const nf = Intl.NumberFormat();
 loginBtn.addEventListener('click', (event) => {
     validateLogin(event)
 })
@@ -95,29 +82,38 @@ const renderSpent = () => {
     console.log(nf.format(currentCustomer.amountSpent))
     rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
-const setDate = () => {
-    currentDate = dayjs(new Date()).format('YYYY-MM-DD')
-    formattedDate = dayjs(currentDate).toString();
-}
-
-
-const renderBeds = (room) => {
-    if (room.numBeds > 1) {
-        return `This room has ${room.numBeds} ${room.bedSize} beds.`
-      }
-      return `This room has ${room.numBeds} ${room.bedSize} bed.`
-    }
 
 const renderResoDate = (booking) => {
-const stringDate = new Date(booking.date).toDateString();
-    if (dayjs(`${booking.date}`).isBefore(currentDate)) {
-        return `Thank you for being our guest on ${stringDate}!`
-    } else {
-        return `We look forward to having you as our guest on ${stringDate}!`
+    const stringDate = new Date(booking.date).toDateString();
+        if (dayjs(`${booking.date}`).isBefore(currentDate)) {
+            return `Thank you for being our guest on ${stringDate}!`
+        } else {
+            return `We look forward to having you as our guest on ${stringDate}!`
+        }
     }
+
+const setDate = () => {
+    currentDate = dayjs(new Date()).format('YYYY-MM-DD')
+    console.log(currentDate)
 }
 
-const resoOptions = document.getElementById('viewResos');
+
+// const renderBeds = (room) => {
+//     if (room.numBeds > 1) {
+//         return `This room has ${room.numBeds} ${room.bedSize} beds.`
+//       }
+//       return `This room has ${room.numBeds} ${room.bedSize} bed.`
+//     }
+
+// const renderResoDate = (booking) => {
+// const stringDate = new Date(booking.date).toDateString();
+//     if (dayjs(`${booking.date}`).isBefore(currentDate)) {
+//         return `Thank you for being our guest on ${stringDate}!`
+//     } else {
+//         return `We look forward to having you as our guest on ${stringDate}!`
+//     }
+// }
+
 resoOptions.addEventListener('change', (event) => {
     handleResoDropDown(event);
 })
@@ -192,6 +188,7 @@ const renderReservations = (type) => {
         if (!upcomingStays.length) {
             roomsDisplay.innerHTML = "You have no upcoming stays booked!";
         } else 
+        currentCustomer.sortBookingsByDate(upcomingStays);
         return upcomingStays.map(booking => {
            allRooms.forEach(room => {
                 if(room.number === booking.roomNumber) {
@@ -221,7 +218,6 @@ const renderReservations = (type) => {
         }).join('')
     }
 }
-const accountMenu = document.getElementById('accountOptions')
 
 const handleAccountDropDown = (event) => {
     if(event.target.value === 'book-room') {
@@ -274,54 +270,33 @@ const validateLogin = (event) => {
     }   
 }
 
-const modal = document.getElementById('modal')
+// const show = (element) => {
+//     element.classList.remove('hidden');
+// }
 
-const show = (element) => {
-    element.classList.remove('hidden');
-}
+// const hide  = (element) => {
+//     element.classList.add('hidden');
+// }
 
-const hide  = (element) => {
-    element.classList.add('hidden');
-}
-
-const dateSelect = document.getElementById('calendar')
-
-
-const placeholderImage = document.getElementById('roomsPlaceholder')
-const searchRooms = document.getElementById('searchRooms')
-const roomTypeSelect = document.getElementById('filterRooms')
-const availableRooms = document.getElementById('roomsAvailable')
-const modalX = document.getElementById('close')
-
-
-// roomTypeSelect.addEventListener('change', (event => {
-//     filterRooms(event)
-// }))
-const clearSelections = () => {
-    dateSelect.value = '';
-    roomTypeSelect.value = '';
-}
 const filterRooms = () => {
     hide(placeholderImage)
+    formattedDate = dayjs(`${dateSelect.value}`).format('YYYY/MM/DD')
+    console.log(formattedDate)
     if (roomTypeSelect.value === 'residential suite') {
-        renderRooms('residential suite', dateSelect.value)
+        renderRooms('residential suite', formattedDate)
     } else if (roomTypeSelect.value  === 'junior suite') {
-        renderRooms('junior suite', dateSelect.value)
+        renderRooms('junior suite', formattedDate)
     } else if (roomTypeSelect.value  === 'single room') {
-        renderRooms('single room', dateSelect.value)
+        renderRooms('single room', formattedDate)
     } else if (roomTypeSelect.value  === 'suite') {
-        renderRooms('suite', dateSelect.value)
+        renderRooms('suite', formattedDate)
     }
 }
 const renderRooms = (type, date) => {
-    hotel.roomsAvailable(date, allBookings)
-    console.log(dateSelect.value)
-    console.log(hotel.roomsAvailable(dateSelect.value, allBookings))
+    hotel.findAvailableRooms(allBookings, date)
+    console.log(hotel.findAvailableRooms(allBookings, date))
     availableRooms.innerHTML = '';
-    if (!hotel.roomsAvailable(dateSelect.value, allBookings)) {
-       return error.innerText = `We are all booked on that date, please try again.`
-    } else {
-        hotel.roomsAvailable(dateSelect.value, allBookings).filter(room => 
+    hotel.findAvailableRooms(allBookings, date).filter(room => 
             room.roomType === type).map(room => {
                 return availableRooms.innerHTML +=   
                     `
@@ -339,43 +314,47 @@ const renderRooms = (type, date) => {
                       <p class='nightly-cost'>$${room.costPerNight}</p>
                       <p>per night</p>
                     </div>
-                    <button id='bookRoom'>Book Room</button>
+                    <button id='bookRoom' class='book-room'>Book Room</button>
                   </article>
                 </article>`
             }) 
         }
-        // clearSelections();
-    }
+
 
 searchRooms.addEventListener('click', () => {
     filterRooms()
 })
-
-
-// dateSelect.addEventListener('change', (event) => {
-//     filterRooms(event)
-// })
 
 const clearModal = () => {
     dateSelect.value = currentDate;
     roomTypeSelect.value = 'choose-room';
     roomsAvailable.innerHTML = '';
     hide(modal);
-    renderReservations('all');
+}
+
+export const onBookingSuccess = () => {
+    currentCustomer.bookRoom(newBooking, allRooms)
+    allBookings.push(newBooking)
+    renderSpent();
+    closeModal();
+    clearModal();
+    renderReservations('upcoming');
+    resoOptions.value = 'upcoming';
+    alert(`Your stay is booked!`);
 }
 
 const addBooking = (date, room) => {
-    let newBooking = new Booking ({
+    newBooking = new Booking ({
         "id": Date.now(),
         "userID": currentCustomer.id,
         "date": date,
         "roomNumber": room
     })
     apiCalls.postBooking(newBooking)
-    currentCustomer.bookRoom(newBooking, allRooms)
-    renderSpent();
-    closeModal();
-    clearModal();
+    // currentCustomer.bookRoom(newBooking, allRooms)
+    // renderSpent();
+    // closeModal();
+    // clearModal();
 }
 
 const determineRoomSelection = (event) => {
@@ -411,3 +390,14 @@ modalX.addEventListener('click', () => {
 availableRooms.addEventListener('click', (event) => {
     determineRoomSelection(event)
 })
+
+// const error = document.getElementById('bookingError')
+
+export const showBookingError = (response) => {
+        if (response.status === 404 || response.status === 422) {
+          error.innerText =
+            'Something went wrong, please try again.'; 
+        } else {
+           error.innerText = "It's not you, it's us... please try again.";
+        }
+      }
