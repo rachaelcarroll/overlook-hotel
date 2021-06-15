@@ -1,3 +1,6 @@
+import Hotel from '../src/Hotel';
+import Booking from '../src/Booking';
+
 class Customer {
     constructor(customerData, bookings) {
         this.id = customerData.id

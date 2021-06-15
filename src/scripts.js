@@ -36,7 +36,7 @@ import './images/Room25.jpg'
 
 import {
 userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, nf
-} from './DOM'
+} from './DOMElements'
 
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate, newBooking;
 

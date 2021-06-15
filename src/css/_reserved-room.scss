@@ -1,0 +1,94 @@
+.reservation-card {
+    justify-content: space-between;
+    display: flex;
+    height: 220px;
+    width: 95%;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+  
+  .reservation-details {
+    margin: 20px;
+    background-color: gray;
+    border-radius: 10px;
+    height: 425px;
+    width: 75%;
+  }
+  
+  .room-photo {
+    height: 100%;
+    width: 40%;
+    
+    img {
+      height: 100%;
+      max-width: 80%;
+      object-fit: cover;
+      position: relative;
+    }
+  }
+  
+  .reserved-room {
+    background-color: $room-card;
+    opacity: 85%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .room-type {
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    margin: 0px 20px 0px 20px;
+  
+    h5 {
+      font-size: 22px;
+      margin: 45px 0px 9px;
+    }
+    
+    .room-beds {
+      margin: 0px 0px 2px 0px;
+    }
+  
+    select {
+      width: 114px;
+      margin: 15px 0px 0px 0px;
+    }
+  }
+  
+  .room-cost {
+    text-align: center;
+    color: $white;
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    max-height: 100%;
+    justify-content: space-between;
+    align-self: baseline;
+  
+      .nightly-cost {
+        margin: 30px 0px 0px 0px;
+      }
+  
+      button {
+        border-radius: 10px;
+        border: 1px solid $teal;
+        width: 106px;
+        height: 30px;
+        margin: 0px 17px 12px;
+        cursor: pointer;
+  
+          &:hover {
+            background-color: $teal;
+            color: $white
+          }
+      }
+  }
+  
+  .reso-date {
+    margin-top: 12px;
+  }
+  

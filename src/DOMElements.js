@@ -18,12 +18,3 @@ export const availableRooms = document.getElementById('roomsAvailable')
 export const modalX = document.getElementById('close')
 export const error = document.getElementById('bookingError')
 export const nf = Intl.NumberFormat();
-
-// export const show = (element) => {
-//     element.classList.remove('hidden');
-// }
-
-// export const hide  = (element) => {
-//     element.classList.add('hidden');
-// }
-
