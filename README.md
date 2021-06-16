@@ -25,24 +25,24 @@ To solidify and demonstrate the understanding of:
 
 ## Functionality 
 
-<!-- #### Login View -->
-<!-- - A customer may login using their corresponding username and password<br>
-![alt text](https://media.giphy.com/media/dTbWqLdK5LH3mvsxiv/giphy.gif "Demo of logging in to the site")
+#### Login View
+- A customer may login using their corresponding username and password<br>
+![alt text](./src/images/login.gif "Demo of logging in to the site")
 
 
 #### Dashboard View 
 - Upon login, the customer can view all of their past and upcoming reservations, sorted in their dashboard<br>
-![alt text](https://media.giphy.com/media/dTbWqLdK5LH3mvsxiv/giphy.gif "Demo of viewing reservations")
+![alt text](./src/images/filter.gif "Demo of viewing reservations")
 
 
 #### Book a Room
 - Customer is able to select a desired date and room type to check availablity and book a stay<br>
-![alt text](https://media.giphy.com/media/fr6WYH3SC24K8suBIw/giphy.gif "Demo of booking a room")
+![alt text](./src/images/bookroom.gif "Demo of booking a room")
 
 
 #### Mobile View/Responsive
 - Site is responsive and will change layouts across desktop, tablet, and phone screens<br>
-![alt text](https://media.giphy.com/media/2yn1mr4EHfQhM755a4/giphy.gif "Demo of responsiveness across media") -->
+![alt text](./src/images/screens.gif "Demo of responsiveness across media")
 
 ## Future Additions
 
