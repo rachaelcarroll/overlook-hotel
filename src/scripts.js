@@ -86,7 +86,7 @@ const correlateCustomers = (customers, bookings) => {
 
 const displayPageLevelError = () => {
   show(loginError)
-  loginError.innerText = `Oops, we seem to be experiencing some
+  loginError.innerText = `Sorry, we seem to be experiencing some
   technical difficulties!`
   loginBtn.setAttribute("disabled", true)
 }
