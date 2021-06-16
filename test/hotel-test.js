@@ -7,7 +7,7 @@ import {
   import Customer from '../src/Customer';
   
   describe('Hotel', function() {
-    let booking1, booking2, booking3, booking4, customer1, customer2, room1, room2, bookingArray, bookingArray2, customers, rooms, hotel;
+    let booking1, booking2, booking3, booking4, customer1, customer2, room1, room2, room3, bookingArray, bookingArray2, customers, rooms, hotel;
 
     beforeEach(() => {
   
@@ -28,8 +28,17 @@ import {
         number: 18,
         roomType: "junior suite"
       })
+    
+    room3 = new Room({
+       bedSize: "twin",
+       bidet: false,
+       costPerNight: 200.00,
+       numBeds: 2,
+       number: 9,
+       roomType: "suite"
+    })
   
-      booking1 = new Booking({
+    booking1 = new Booking({
         date: "2020/02/08",
         id: "5fwrgu4i7k55hl78v",
         roomNumber: 25,
@@ -70,7 +79,7 @@ import {
       bookingArray2.push(booking3, booking4)
   
       customers.push(customer1, customer2)
-      rooms.push(room1, room2)
+      rooms.push(room1, room2, room3)
     
       
       customer1 = new Customer({
@@ -102,4 +111,12 @@ import {
         expect(hotel.customers).to.deep.equal([customer1, customer2]);
         expect(hotel.customers.length).to.equal(2);
       });
+
+      it('should find all rooms that are not booked on a given date', function () {
+        let avail = hotel.findAvailableRooms(bookingArray2, "2020/01/24");
+        let avail2 = hotel.findAvailableRooms(bookingArray2, "2020/01/22");
+        
+        expect(avail.length).to.equal(3);
+        expect(avail2.length).to.equal(2);
+      })
     });
