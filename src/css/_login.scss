@@ -9,11 +9,14 @@
     color: $white;
   
     h1 {
-      margin: 10px 0px 7px 0px;
+      margin: 5px 0px 0px 0px;
+      text-decoration: 1px underline;
+      text-underline-offset: 8px;
     }
     
     p {
-      margin: 0px;
+      margin-top: 3px;
+      letter-spacing: 2px;
     }
   
   }
@@ -30,7 +33,7 @@
     height: 30%;
     flex-direction: column;
     align-items: center;
-    background-color: $teal;
+    background-color: rgba(74, 116, 123, 0.90);
       border-radius: 15px;
       color: $white;
   
@@ -48,9 +51,11 @@
       height: 30px;
       margin: 8px 24px 0px 24px;
       cursor: pointer;
+      font-family: $main-font;
+      letter-spacing: .5px;
   
       &:hover{
-        background-color: $black;
+        background-color: $room-card;
         color: $white;
       }
     }
