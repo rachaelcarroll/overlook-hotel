@@ -71,14 +71,14 @@ window.addEventListener('load', function() {
         allRooms = fetchRoomsData.rooms.map(room => new Room(room))
         hotel = new Hotel(correlateCustomers(fetchCustomerData, allBookings), allRooms)       
     })
-    .catch(err => displayPageLevelError())
+    .catch(err => apiCalls.displayError(err))
 })
 
-const displayPageLevelError = () => {
-  show(loginError)
-  loginBox.innerHTML = `<h2><strong>Sorry, we seem to be experiencing some
-  technical difficulties. Please check back later.</strong></h2>`
-}
+// const displayPageLevelError = () => {
+//   show(loginError)
+//   loginBox.innerHTML = `<h2><strong>Sorry, we seem to be experiencing some
+//   technical difficulties. Please check back later.</strong></h2>`
+// }
 
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
@@ -295,13 +295,15 @@ const addBooking = (date, room) => {
 export const onBookingSuccess = (event) => {
     renderSpent();
     roomsAvailable.innerHTML = '';
-    // roomFilters.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}`
+    roomsAvailable.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}`
+    hide(roomFilters)
     setTimeout(function() {
         renderSpent();
         closeModal();
         clearModal();
         renderReservations('upcoming');
         resoOptions.value = 'upcoming';
+        show(roomFilters)
       }, 3000);
 
 }

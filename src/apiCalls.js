@@ -1,6 +1,9 @@
 import {
-  onBookingSuccess,
+  onBookingSuccess
 } from './scripts';
+import {
+  loginBox
+} from './DOMelements';
 
 const fetchAllCustomers = () => {
     return fetch('http://localhost:3001/api/v1/customers')
@@ -41,6 +44,8 @@ const displayError = (errorMessage) => {
     const message = errorMessage.message === 'Failed to fetch' ?
       "Internet connection may be unstable. Check again in a moment please." : errorMessage;
     bookingError.innerText = `Something went wrong, please try again later.`;
+    loginBox.innerHTML = `<h2><strong>Sorry, we seem to be experiencing some
+    technical difficulties. Please check back later.</strong></h2>`
 }
 
 const checkForError = (response) => {
@@ -51,4 +56,4 @@ const checkForError = (response) => {
     }
 }
 
-export default { getData , postBooking }
+export default { getData , postBooking, displayError }
