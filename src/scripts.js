@@ -275,19 +275,19 @@ const renderRooms = (type, date) => {
                     `
                 <article class='room-card' id='roomCard'>
                   <article class='available-room' id='${room.number}'>
-                    <div class='room-photo'>
+                    <div class='booking-photo'>
                       <img src='images/Room${room.number}.jpg'>
                     </div>
                     <div class='room-type'>
                       <h5>${room.roomType.toUpperCase()} #${room.number}</h5>
-                      <p>DETAILS:</p>
-                      <p>${renderBeds(room)}</p>
+                      <p class='details'>DETAILS:</p>
+                      <p class='beds'>${renderBeds(room)}</p>
                     </div>
-                    <div class='room-cost'>
+                    <div class='cost'>
                       <p class='nightly-cost'>$${room.costPerNight}</p>
                       <p>per night</p>
+                      <button id='bookRoom' class='book-room'>Book Room</button>
                     </div>
-                    <button id='bookRoom' class='book-room'>Book Room</button>
                   </article>
                 </article>`
             }) 

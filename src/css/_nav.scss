@@ -10,9 +10,11 @@ nav {
   }
 
   h1 {
-    margin: 16px;
-    font-size: 24px;
+    margin: 12px;
+    font-size: 28px;
     font-weight: 600;
+    font-family: $fancy-font;
+    font-style: italic;
     letter-spacing: 1.2px;
   }
   
@@ -37,13 +39,16 @@ nav {
   
   
   .account-options {
-    height: 25px;
-      width: 155px;
+      height: 25px;
+      width: 186px;
       border-radius: 5px;
       background-color: $black;
       color: $white;
       font-size: 14px;
       border: 1px solid $white;
       cursor: pointer;
+      font-family: $main-font;
+      font-weight: bold;
+      letter-spacing: 1px;
   }
   
