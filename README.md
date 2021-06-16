@@ -46,9 +46,9 @@ To solidify and demonstrate the understanding of:
 
 ## Future Additions
 
-- *Manager Login/Dashboard* functionality to login as a Manager and view all bookings and hotel revenue
-- *Date Range* functionality to allow users to book more than one night 
-- *Share* ability to share an upcoming trip with family and friends via social media or email 
+- *Manager Login/Dashboard*: functionality to login as a Manager and view all bookings and hotel revenue
+- *Date Range*: functionality to allow users to book more than one night 
+- *Share*: ability to share an upcoming trip with family and friends via social media or email 
 
 ## Instructions for Running Project Locally
 
