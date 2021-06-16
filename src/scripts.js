@@ -60,14 +60,6 @@ availableRooms.addEventListener('click', (event) => {
     determineRoomSelection(event)
 })
 
-
-const correlateCustomers = (customers, bookings) => {
-    return customers.customers.map(customer => {
-        let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
-        return new Customer(customer, correlatedBookings)
-  })
-}
-
 window.addEventListener('load', function() {
     apiCalls.getData()
     .then(data => {
@@ -85,6 +77,13 @@ window.addEventListener('load', function() {
     .catch(err => displayPageLevelError())
 })
 
+const correlateCustomers = (customers, bookings) => {
+    return customers.customers.map(customer => {
+        let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
+        return new Customer(customer, correlatedBookings)
+  })
+}
+
 const displayPageLevelError = () => {
   show(loginError)
   loginError.innerText = `Oops, we seem to be experiencing some
@@ -92,6 +91,27 @@ const displayPageLevelError = () => {
   loginBtn.setAttribute("disabled", true)
 }
 
+const validateLogin = (event) => {
+    event.preventDefault();
+    customerLogin = userLogin.value.toLowerCase().split('r');
+    console.log(customerLogin)
+    if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && !customerLogin[1].startsWith(0) && password.value === 'overlook2021') {
+        customerLogin = customerLogin.join('r');
+        loadHotel();
+    } else {
+        show(loginError);
+    }   
+}
+
+const loadHotel = () => {
+    setDate();
+    currentCustomer = hotel.customers.find(customer => customer.username === customerLogin)
+    hide(loginPage)
+    show(mainDashboard)
+    renderSpent()
+    greetCustomer();
+    renderReservations('all');
+}
 
 const greetCustomer = () => {
     userGreeting.innerText = ''
@@ -108,6 +128,11 @@ const renderSpent = () => {
     rewardPoints.innerText += `Total Reward Points: ${(nf.format((currentCustomer.amountSpent * 2).toFixed(0)))}`
 }
 
+const setDate = () => {
+    currentDate = dayjs(new Date()).format('YYYY-MM-DD')
+    console.log(currentDate)
+}
+
 const renderResoDate = (booking) => {
     const stringDate = new Date(booking.date).toDateString();
         if (dayjs(`${booking.date}`).isBefore(currentDate)) {
@@ -116,12 +141,6 @@ const renderResoDate = (booking) => {
             return `We look forward to having you as our guest on ${stringDate}!`
         }
     }
-
-const setDate = () => {
-    currentDate = dayjs(new Date()).format('YYYY-MM-DD')
-    console.log(currentDate)
-}
-
 
 const renderBeds = (room) => {
     if (room.numBeds > 1) {
@@ -194,7 +213,6 @@ const createRoomCard = (room, booking) => {
                  </article>`
 }
 
-
 const handleAccountDropDown = (event) => {
     if(event.target.value === 'book-room') {
         show(modal)
@@ -220,37 +238,6 @@ const handleResoDropDown = (event) => {
     }
 }
 
-const loadHotel = () => {
-    setDate();
-    currentCustomer = hotel.customers.find(customer => customer.username === customerLogin)
-    hide(loginPage)
-    show(mainDashboard)
-    renderSpent()
-    greetCustomer();
-    renderReservations('all');
-}
-
-
-const validateLogin = (event) => {
-    event.preventDefault();
-    customerLogin = userLogin.value.toLowerCase().split('r');
-    console.log(customerLogin)
-    if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && !customerLogin[1].startsWith(0) && password.value === 'overlook2021') {
-        customerLogin = customerLogin.join('r');
-        loadHotel();
-    } else {
-        show(loginError);
-    }   
-}
-
-const show = (element) => {
-    element.classList.remove('hidden');
-}
-
-const hide  = (element) => {
-    element.classList.add('hidden');
-}
-
 const filterRooms = () => {
     hide(placeholderImage)
     formattedDate = dayjs(`${dateSelect.value}`).format('YYYY/MM/DD')
@@ -265,6 +252,7 @@ const filterRooms = () => {
         renderRooms('suite', formattedDate)
     }
 }
+
 const renderRooms = (type, date) => {
     hotel.findAvailableRooms(allBookings, date)
     console.log(hotel.findAvailableRooms(allBookings, date))
@@ -293,11 +281,25 @@ const renderRooms = (type, date) => {
             }) 
         }
 
-const clearModal = () => {
-    dateSelect.value = currentDate;
-    roomTypeSelect.value = 'choose-room';
-    roomsAvailable.innerHTML = '';
-    hide(modal);
+const determineRoomSelection = (event) => {
+    event.preventDefault();
+    if (event.target.id === 'bookRoom') {
+       bookedRoomNum = parseInt(event.target.closest('article').id);
+       formatPostDate = dateSelect.value.split('-').join('/')
+       addBooking(formatPostDate, bookedRoomNum)
+  }
+}
+
+const addBooking = (date, room) => {
+    newBooking = new Booking ({
+        "id": Date.now(),
+        "userID": currentCustomer.id,
+        "date": date,
+        "roomNumber": room
+    })
+    currentCustomer.bookRoom(newBooking, allRooms)
+    allBookings.push(newBooking)
+    apiCalls.postBooking(newBooking)
 }
 
 export const onBookingSuccess = (event) => {
@@ -313,25 +315,11 @@ export const onBookingSuccess = (event) => {
 
 }
 
-const addBooking = (date, room) => {
-    newBooking = new Booking ({
-        "id": Date.now(),
-        "userID": currentCustomer.id,
-        "date": date,
-        "roomNumber": room
-    })
-    currentCustomer.bookRoom(newBooking, allRooms)
-    allBookings.push(newBooking)
-    apiCalls.postBooking(newBooking)
-}
-
-const determineRoomSelection = (event) => {
-    event.preventDefault();
-    if (event.target.id === 'bookRoom') {
-       bookedRoomNum = parseInt(event.target.closest('article').id);
-       formatPostDate = dateSelect.value.split('-').join('/')
-       addBooking(formatPostDate, bookedRoomNum)
-  }
+const clearModal = () => {
+    dateSelect.value = currentDate;
+    roomTypeSelect.value = 'choose-room';
+    roomsAvailable.innerHTML = '';
+    hide(modal);
 }
 
 const closeModal = () => {
@@ -341,21 +329,11 @@ const closeModal = () => {
     error.innerText = '';
 }
 
-// modalX.addEventListener('click', () => {
-//     closeModal()
-// })
+const show = (element) => {
+    element.classList.remove('hidden');
+}
 
-// availableRooms.addEventListener('click', (event) => {
-//     determineRoomSelection(event)
-// })
+const hide  = (element) => {
+    element.classList.add('hidden');
+}
 
-// const error = document.getElementById('bookingError')
-
-// export const showBookingError = (response) => {
-//         if (response.status === 404 || response.status === 422) {
-//           error.innerText =
-//             'Something went wrong, please try again.'; 
-//         } else {
-//            error.innerText = "It's not you, it's us... please try again.";
-//         }
-//       }
