@@ -66,9 +66,6 @@ window.addEventListener('load', function() {
         fetchCustomerData = data[0];
         fetchRoomsData = data[1];
         fetchBookingsData = data[2];
-        console.log(fetchCustomerData)
-        console.log(fetchRoomsData)
-        console.log(fetchBookingsData)
 
         allBookings = fetchBookingsData.bookings.map(booking => new Booking(booking))
         allRooms = fetchRoomsData.rooms.map(room => new Room(room))
@@ -94,7 +91,6 @@ const displayPageLevelError = () => {
 const validateLogin = (event) => {
     event.preventDefault();
     customerLogin = userLogin.value.toLowerCase().split('r');
-    console.log(customerLogin)
     if (customerLogin[0] === 'custome' && parseInt(customerLogin[1]) > 0 && parseInt(customerLogin[1]) < 51 && !customerLogin[1].startsWith(0) && password.value === 'overlook2021') {
         customerLogin = customerLogin.join('r');
         loadHotel();
@@ -120,8 +116,6 @@ const greetCustomer = () => {
 
 const renderSpent = () => {
     currentCustomer.calculateTotalSpent(allRooms);
-    console.log("spent", currentCustomer.amountSpent)
-    console.log(currentCustomer.bookings)
     totalSpent.innerText = '';
     rewardPoints.innerText = '';
     totalSpent.innerText += `Total Spent: $${nf.format(currentCustomer.amountSpent)}`;
@@ -130,7 +124,6 @@ const renderSpent = () => {
 
 const setDate = () => {
     currentDate = dayjs(new Date()).format('YYYY-MM-DD')
-    console.log(currentDate)
 }
 
 const renderResoDate = (booking) => {
@@ -241,7 +234,6 @@ const handleResoDropDown = (event) => {
 const filterRooms = () => {
     hide(placeholderImage)
     formattedDate = dayjs(`${dateSelect.value}`).format('YYYY/MM/DD')
-    console.log(formattedDate)
     if (roomTypeSelect.value === 'residential suite') {
         renderRooms('residential suite', formattedDate)
     } else if (roomTypeSelect.value  === 'junior suite') {
@@ -255,7 +247,6 @@ const filterRooms = () => {
 
 const renderRooms = (type, date) => {
     hotel.findAvailableRooms(allBookings, date)
-    console.log(hotel.findAvailableRooms(allBookings, date))
     availableRooms.innerHTML = '';
     hotel.findAvailableRooms(allBookings, date).filter(room => 
             room.roomType === type).map(room => {
@@ -336,4 +327,3 @@ const show = (element) => {
 const hide  = (element) => {
     element.classList.add('hidden');
 }
-
