@@ -23,6 +23,10 @@
       margin-bottom: 20px;
   }
 
+  .room-card .room-type h5 {
+    text-decoration: none;
+  }
+  
   .reservation-details {
       height: 213px;
       width: 90%;
@@ -63,6 +67,10 @@
         h5 {
           text-decoration: none;
         }
+    }
+
+    .room-card .room-type h5 {
+      text-decoration: none;
     }
 
     .reservation-details {

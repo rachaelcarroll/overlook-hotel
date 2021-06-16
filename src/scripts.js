@@ -35,7 +35,7 @@ import './images/Room24.jpg'
 import './images/Room25.jpg'
 
 import {
-userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, nf
+userLogin, loginBtn, loginError, password, loginPage, mainDashboard, userGreeting, totalSpent, rewardPoints, resoOptions, accountMenu, modal, dateSelect, placeholderImage, searchRooms, roomTypeSelect, availableRooms, modalX, error, loginBox, roomFilters, nf
 } from './DOMElements'
 
 let fetchCustomerData, fetchRoomsData, fetchBookingsData, hotel, currentCustomer, currentDate, allBookings, allRooms, formattedDate, customerLogin, bookedRoomNum, formatPostDate, newBooking;
@@ -74,18 +74,18 @@ window.addEventListener('load', function() {
     .catch(err => displayPageLevelError())
 })
 
+const displayPageLevelError = () => {
+  show(loginError)
+  loginBox.innerHTML = `<h2><strong>Sorry, we seem to be experiencing some
+  technical difficulties. Please check back later.</strong></h2>`
+//   loginBtn.setAttribute("disabled", true)
+}
+
 const correlateCustomers = (customers, bookings) => {
     return customers.customers.map(customer => {
         let correlatedBookings = bookings.filter(booking => booking.userID === customer.id)
         return new Customer(customer, correlatedBookings)
   })
-}
-
-const displayPageLevelError = () => {
-  show(loginError)
-  loginError.innerText = `Sorry, we seem to be experiencing some
-  technical difficulties!`
-  loginBtn.setAttribute("disabled", true)
 }
 
 const validateLogin = (event) => {
@@ -295,7 +295,8 @@ const addBooking = (date, room) => {
 
 export const onBookingSuccess = (event) => {
     renderSpent();
-    roomsAvailable.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}!`
+    roomsAvailable.innerHTML = '';
+    roomFilters.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}`
     setTimeout(function() {
         renderSpent();
         closeModal();
