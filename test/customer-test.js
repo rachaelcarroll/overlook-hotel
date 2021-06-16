@@ -146,7 +146,7 @@ describe('Customer', function() {
       it('should sort bookings by date', function () {
         customer2.sortBookingsByDate();
         
-        expect(customer2.bookings[1]).to.equal(booking3)
+        expect(customer2.bookings[1]).to.equal(booking4)
       });
 });
 

@@ -40,7 +40,6 @@ const displayError = (errorMessage) => {
     const bookingError =  document.getElementById('bookingError');
     const message = errorMessage.message === 'Failed to fetch' ?
       "Internet connection may be unstable. Check again in a moment please." : errorMessage;
-    console.log(message)
     bookingError.innerText = `Something went wrong, please try again later.`;
 }
 
