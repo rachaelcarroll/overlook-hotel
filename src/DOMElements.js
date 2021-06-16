@@ -17,4 +17,6 @@ export const roomTypeSelect = document.getElementById('filterRooms')
 export const availableRooms = document.getElementById('roomsAvailable')
 export const modalX = document.getElementById('close')
 export const error = document.getElementById('bookingError')
+export const loginBox = document.getElementById('loginContent')
+export const roomFilters = document.getElementById('chooseStay')
 export const nf = Intl.NumberFormat();
