@@ -1,8 +1,10 @@
+import Booking from "./Booking";
+
 class Hotel {
-    constructor(customers, rooms) {
-      this.customers = customers;
-      this.rooms = rooms
-    }
+  constructor(customers, rooms) {
+    this.customers = customers;
+    this.rooms = rooms
+  }
     
   findAvailableRooms(bookings, date) {
     let reserved = bookings.filter(booking => {
@@ -20,7 +22,6 @@ class Hotel {
       }
       return acc;
     }, []);
-
     return availableRooms;
   }
 }

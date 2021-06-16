@@ -1,5 +1,6 @@
 import Hotel from '../src/Hotel';
 import Booking from '../src/Booking';
+import Room from '../src/Room';
 
 class Customer {
     constructor(customerData, bookings) {
@@ -35,8 +36,9 @@ class Customer {
     }
 
     correlateBookingCost(rooms, booking) {
-    let bookedRoom = rooms.find(room => room.number === booking.roomNumber)
-        return bookedRoom.costPerNight
+    let bookedRoom = new Room(rooms)
+    bookedRoom = rooms.find(room => room.number === booking.roomNumber)
+    return bookedRoom.costPerNight
     }
 
     bookRoom(booking, rooms) {
@@ -44,7 +46,7 @@ class Customer {
         this.amountSpent += this.correlateBookingCost(rooms, booking)
     }
 
-    sortBookingsByDate(otherbookings) {
+    sortBookingsByDate() {
     this.bookings.sort((a, b) => {
         return a.date > b.date ? 1 : -1;
         })
