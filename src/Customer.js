@@ -48,7 +48,7 @@ class Customer {
 
     sortBookingsByDate() {
     this.bookings.sort((a, b) => {
-        return a.date > b.date ? 1 : -1;
+        return a.date > b.date ? -1 : 1;
         })
     }
 }

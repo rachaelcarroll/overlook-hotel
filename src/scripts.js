@@ -78,7 +78,6 @@ const displayPageLevelError = () => {
   show(loginError)
   loginBox.innerHTML = `<h2><strong>Sorry, we seem to be experiencing some
   technical difficulties. Please check back later.</strong></h2>`
-//   loginBtn.setAttribute("disabled", true)
 }
 
 const correlateCustomers = (customers, bookings) => {
@@ -296,7 +295,7 @@ const addBooking = (date, room) => {
 export const onBookingSuccess = (event) => {
     renderSpent();
     roomsAvailable.innerHTML = '';
-    roomFilters.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}`
+    // roomFilters.innerHTML = `Your stay is booked! ${renderResoDate(newBooking)}`
     setTimeout(function() {
         renderSpent();
         closeModal();
