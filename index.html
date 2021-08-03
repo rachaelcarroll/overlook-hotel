@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400&family=Spectral:ital,wght@1,300&display=swap" rel="stylesheet"> 
+  <title>Overlook Hotel</title>
+</head>
+<body>
+  <main class='login-page'id='loginPage'>
+    <header class='login-header' id='loginHeader'>
+      <h1 class="login-title " id="loginTitle">The Overlook</h1>
+      <p class="login-subtitle" id="loginSubtitle">your paradise awaits</p>
+    </header>
+    <section class='login' id='login'>
+      <article class='login-content' id='loginContent'>
+        <p>Please Sign In</p>
+        <form class='login-credentials' id='loginCredentials'>
+          <label for='username-input'>Username:</label>
+          <input type='text' id='username-input' autocomplete='off' required>
+          <label for='password-input'>Password:</label>
+          <input type='password' id='password-input' autocomplete='off' required>
+          <button class='loginBtn' id='loginBtn'>SUBMIT</button>
+          <p class='login-error hidden' id='loginError'>Login Error. Please try again.</p>
+        </form>
+      </article>
+    </section>
+  </main>
+  <main class='dashboard-view hidden' id='dashboardView'> 
+    <nav>
+      <header class='hotel-branding' id='hotelBranding'>
+        <logo></logo>
+        <h1>The Overlook</h1>
+      </header>
+      <section class='user-nav' id='userNav'>
+        <h2 class='user-greeting' id='userGreeting'>Welcome back, Rachael!</h2>
+        <article class='user-info'>
+          <form class='user-account' action='drop-down'>
+            <select class='account-options' id='accountOptions'>
+              <option value='reservations'>MY RESERVATIONS</option>
+              <option value='book-room'>BOOK A STAY</option>
+              <option value='sign-out'>LOG OUT</option>
+            </select>
+          </form>
+        </article>
+      </section>
+    </nav>
+    <section class='modal hidden' id='modal'>
+      <article class='modal-content' id='modalContent'>
+        <header class='modal-header' id='modalHeader'>
+          <button class='close-modal' id='closeModal' role='button' aria-label="close-modal">
+            <img id='close' class='modal-X' src="https://img.icons8.com/fluent-systems-filled/48/000000/x.png"/>
+          </button>
+        </header>
+        <section class='choose-stay' id='chooseStay'>
+          <p>Please select a desired room and date:</p>
+          <div class='room-filters-div' id='roomFilters'>
+            <select class='filter-rooms' id='filterRooms' required>
+              <option value='choose-room' selected='true' disabled='disabled'>Choose A Room</option>
+              <option value='residential suite'>Residential Suite</option>
+              <option value='suite'>Suite</option>
+              <option value='single room'>Single Room</option>
+              <option value='junior suite'>Junior Suite</option>
+            </select>
+            <label for="calendar"></label>
+              <input type="date" id="calendar" name="calendar" min='' value=''>
+            <button class='search-rooms' id='searchRooms'>SEARCH AVAILABILITY</button>
+          </div>
+            <p class='booking-error' id='bookingError'></p>
+        </section>
+          <img class='rooms-placeholder hidden' id='roomsPlaceholder' src='./images/main-photo.jpg' alt='resort pool' style='max-width: 100%'>
+        <section class='rooms-available' id='roomsAvailable'>
+        </section>
+      </article>
+    </section>
+    <section class='grid-container' id='gridContainer'>
+      <aside class='reservation-area' id='reservationArea'>
+        <section class='reservation-details' id='reservationDetails'>
+          <div class='all-resos'>
+            <h3>MY RESERVATIONS</h3>
+            <p class='member'>Thank you for being an Overlook Reward member!</p>
+            <p class='total-spent' id='totalSpent'></p>
+            <p class='reward-points' id='rewardPoints'></p>
+            <select class='view-resos' id='viewResos'>
+              <option value='all-reservations' selected='true' >View All Reservations</option>
+              <option value='upcoming'>Upcoming</option>
+              <option value='past'>Past</option>
+            </select>
+          </div>
+        </section>
+      </aside>
+      <section class='rooms-display' id='roomsDisplay'>
+      </section>
+    </section>
+  </main>
+  <script src="bundle.js"></script>
+</body>
+</html>
