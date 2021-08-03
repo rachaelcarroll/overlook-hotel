@@ -23,6 +23,13 @@ To solidify and demonstrate the understanding of:
 - Creating an enjoyable user experience and responsive user interface
 - Creating a robust test suite that thoroughly tests all functionality of a client-side application
 
+
+Check out the [deployed app!](https://rachaelcarroll.github.io/overlook-hotel/)
+  > Username is Customer + a number 1-50
+  
+  > Password is overlook2021
+ 
+
 ## Functionality 
 
 #### Login View
