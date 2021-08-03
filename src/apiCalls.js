@@ -6,17 +6,17 @@ import {
 } from './DOMelements';
 
 const fetchAllCustomers = () => {
-    return fetch('http://localhost:3001/api/v1/customers')
+    return fetch('https://overlook-hotel-api.herokuapp.com/api/v1/customers')
       .then(response => response.json())
       .catch(err => displayError(err))
   }
   const fetchRooms = () => {
-    return fetch('http://localhost:3001/api/v1/rooms')
+    return fetch('https://overlook-hotel-api.herokuapp.com/api/v1/rooms')
       .then(response => response.json())
       .catch(err => displayError(err))
   }
   const fetchBookings = () => {
-    return fetch('http://localhost:3001/api/v1/bookings')
+    return fetch('https://overlook-hotel-api.herokuapp.com/api/v1/bookings')
       .then(response => response.json())
       .catch(err => displayError(err))
   }
@@ -26,7 +26,7 @@ const fetchAllCustomers = () => {
   }
 
   const postBooking = (booking) => {
-    let url = 'http://localhost:3001/api/v1/bookings/'
+    let url = 'https://overlook-hotel-api.herokuapp.com/api/v1/bookings/'
     fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
